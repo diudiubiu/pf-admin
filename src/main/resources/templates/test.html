@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <script src="jquery.min.js"></script>
+  <script src="jquery.json-editor.min.js"></script>
+  <title>ECR_json</title>
+  <style>
+    #json-display {
+      border: 1px solid #000;
+      margin: 0;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <p class="lead">
+  <h3>ECR</h3>
+  </p>
+  <hr/>
+  <div class="row">
+    <div class="col-md-10">
+      <button class="btn btn-default" id="translate">Translate To HTML</button>
+      <br/>
+      <input id="json-input" value="{age:30}"></input><br/>
+      <pre id="json-display"></pre>
+      <script type="text/javascript">
+        function getJson() {
+          try {
+            return JSON.parse($('#json-input').val());
+          } catch (ex) {
+            alert('Wrong JSON Format: ' + ex);
+          }
+        }
+        options = {defaultCollapsed: true}
+        var editor = new JsonEditor('#json-display', getJson(), options);
+        $(".json-toggle:first").click();
+        $('#translate').on('click', function () {
+          //editor.load(getJson());
+          try {
+            alert(editor.get());
+            var a = eval("(" + editor.get().age+ ")");
+            alert(a);
+
+            localStorage.setItem("htmlData",editor.get());
+          } catch (ex) {
+            // Trigger an Error when JSON invalid
+            alert(ex);
+          }
+        });
+      </script>
+    </div>
+  </div>
+  <p class="lead">&nbsp;
+  </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="jquery.json-editor.min.js"></script>
+    <title>ECR_json</title>
+    <style>
+        #json-display {
+            border: 1px solid #000;
+            margin: 0;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p class="lead">
+    <h3>ECR</h3>
+    </p>
+    <hr/>
+    <div class="row">
+        <div class="col-md-10">
+            <button class="btn btn-default" id="translate">Translate To HTML</button><br/>
+            <textarea id="json-input" th:text="${htmlData}" hidden></textarea><br/>
+            <pre id="json-display"></pre>
+            <script type="text/javascript">
+                function getJson() {
+                    try {
+                        return JSON.parse($('#json-input').val());
+                    } catch (ex) {
+                        alert('Wrong JSON Format: ' + ex);
+                    }
+                }
+                //options = {defaultCollapsed: true}
+                var editor = new JsonEditor('#json-display', getJson());
+                $(".json-toggle:first").click();
+                $('#translate').on('click', function () {
+                     try {
+                         //var a = eval("(" + editor.get().totalNumber+ ")");
+                         //alert(a);
+                        localStorage.setItem("employeeJson",JSON.stringify(editor.get()));
+                        location.href="pdf";
+                     } catch (ex) {
+                        alert(ex);
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <p class="lead">&nbsp;
+    </p>
+</div>
+</body>
+</html>
