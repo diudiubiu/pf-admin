@@ -4,7 +4,6 @@ spring:
   thymeleaf:
     cache: false
     mode: html
-
 #开启日志 如果级别：off(少)>error>warn>info>debug(多)>all
 logging:
   level:

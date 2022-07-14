@@ -198,7 +198,7 @@ public class ExcelOperationHelp {
         //System.out.println(str);
         String str = uanStrOpt("SANGEETHAELUMALAI");
 
-        System.out.println(str);
+        System.out.println(33/8);
 
     }
 }
