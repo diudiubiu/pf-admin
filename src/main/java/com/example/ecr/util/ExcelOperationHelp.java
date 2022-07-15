@@ -196,9 +196,10 @@ public class ExcelOperationHelp {
         //sb.insert(12, "<br/>");
         //String str = sb.toString();
         //System.out.println(str);
-        String str = uanStrOpt("SANGEETHAELUMALAI");
+        //String str = uanStrOpt("SANGEETHAELUMALAI");
 
-        System.out.println(33/8);
+        //System.out.println(33/8);
+        System.out.println(StrUtil.sub("adfadsasffasdf\n123",0,-1));
 
     }
 }

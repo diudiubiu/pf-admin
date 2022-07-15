@@ -1,7 +1,7 @@
 package com.example.ecr.control;
 
 
-import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.ExcelReader;
@@ -33,23 +33,22 @@ public class ExcelOperationControl {
 
     static Logger log = LoggerFactory.getLogger(ExcelOperationControl.class);
 
-
     double startTableHigh = 1316 - 138 - 55;
     double middleTableHigh = 1371 - 138 - 55;
     double endTableHigh = 1371 - 138 - 631 + 100;
-    double rowHigh = 0;
-    int linePx = 1;
-    int page = 1;
-    int siNo = 0;
-    double gSum = 0, hSum = 0, iSum = 0;
-    String gStr, hStr, iStr;
-    HtmlData htmlData = new HtmlData();
-    List<MemberDetails> memberDetailsList = new ArrayList<>();
-    Map<Integer, List<MemberDetails>> pageDataMap = new HashMap<Integer, List<MemberDetails>>();
 
-
-    @PostMapping("/excel2html")
+    @PostMapping("/excel2json")
     public String excel2html(Model model, MultipartFile file, EmployeeData employeeData) throws IOException {
+
+        int linePx = 1, page = 1, siNo = 0;
+        double rowHigh = 0, gSum = 0, hSum = 0, iSum = 0;
+        String gStr, hStr, iStr;
+
+        HtmlData htmlData = new HtmlData();
+        List<MemberDetails> memberDetailsList = new ArrayList<>();
+        Map<Integer, List<MemberDetails>> pageDataMap = new HashMap<Integer, List<MemberDetails>>();
+
+
         //log.info("-----EmployeeData,{}", employeeData);
         if (file.isEmpty()) {
             return null;
@@ -87,10 +86,16 @@ public class ExcelOperationControl {
             memberDetails.setRefunds(String.valueOf(objects.get(10)));
 
             if (rowHigh >= startTableHigh && page == 1) {
-                clearAndSave();
+                pageDataMap.put(page, memberDetailsList);
+                memberDetailsList = new ArrayList<>();
+                rowHigh = 0;
+                page = page + 1;
             }
             if (rowHigh >= middleTableHigh && page > 1) {
-                clearAndSave();
+                pageDataMap.put(page, memberDetailsList);
+                memberDetailsList = new ArrayList<>();
+                rowHigh = 0;
+                page = page + 1;
             }
 
             memberDetailsList.add(memberDetails);
@@ -109,17 +114,10 @@ public class ExcelOperationControl {
         //log.info("htmlData:,{}", htmlData);
         JSONObject json = JSONUtil.parseObj(htmlData);
         model.addAttribute("htmlData", json);
-        log.info("htmlData:,{}", json);
+        //log.info("htmlData:,{}", json);
         //FileWriter writer = new FileWriter("json.data");
         //writer.write(String.valueOf(json));
         return "json";
-    }
-
-    void clearAndSave() {
-        pageDataMap.put(page, memberDetailsList);
-        memberDetailsList = new ArrayList<>();
-        rowHigh = 0;
-        page = page + 1;
     }
 
     @PostMapping("/excel2txt")
@@ -145,8 +143,9 @@ public class ExcelOperationControl {
         if (strAll.length() == 0) {
             return "failure";
         }
-
-        byte[] fileData = strAll.toString().getBytes();
+        //去掉最后的 \n.
+        String txtStr = StrUtil.sub(strAll.toString(), 0, -1);
+        byte[] fileData = txtStr.getBytes();
 
         // 将文件内容 byte[]，通过 response 返回给客户端进行下载
         if (fileData.length > 0) {

@@ -13,11 +13,11 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
           Sl. No.
         </div>
         <div
-          class="w-[159px] border border-black -ml-px flex justify-center items-center pl-[10px]"
+          class="w-[158px] border border-black border-l-0 flex justify-center items-center pl-[10px]"
         >
           UAN
         </div>
-        <div class="w-[304px] border border-black -ml-px flex flex-col">
+        <div class="w-[303px] border border-black border-l-0 flex flex-col">
           <div class="h-[54px] flex justify-center items-center pl-[10px]">Name as per</div>
           <div class="h-[84px] border-t border-black flex">
             <div
@@ -25,10 +25,10 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
             >
               ECR
             </div>
-            <div class="h-full w-[138px] text-center -ml-px pl-[10px]">UAN Repository</div>
+            <div class="h-full w-[138px] text-center border-l-0 border-t-0 pl-[10px]">UAN Repository</div>
           </div>
         </div>
-        <div class="w-[445px] border border-black -ml-px flex flex-col">
+        <div class="w-[444px] border border-black border-l-0 flex flex-col">
           <div class="h-[54px] flex justify-center items-center">Wages</div>
           <div class="h-[84px] border-t border-black flex">
             <div
@@ -49,7 +49,7 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
             <div class="h-full w-[110px] flex justify-center items-center pl-[10px]">EDLI</div>
           </div>
         </div>
-        <div class="w-[515px] border border-black -ml-px flex flex-col">
+        <div class="w-[] border border-black border-l-0 flex flex-col">
           <div class="h-[54px] flex justify-center items-center pl-[10px]">
             Contribution Remitted
           </div>
@@ -73,11 +73,11 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
           </div>
         </div>
         <div
-          class="w-[140px] border border-black -ml-px flex justify-center items-center pl-[10px]"
+          class="w-[139px] border border-black border-l-0 flex justify-center items-center pl-[10px]"
         >
           Refunds
         </div>
-        <div class="w-[431px] border border-black -ml-px flex flex-col">
+        <div class="w-[430px] border border-black border-l-0 flex flex-col">
           <div class="h-[54px] flex justify-center items-center pl-[10px]">
             PMRPY / ABRY Benefit
           </div>
@@ -97,84 +97,82 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
             </div>
           </div>
         </div>
-        <div class="w-[146px] border border-black -ml-px text-center flex pt-[15px] pl-[10px]">
+        <div class="w-[145px] border border-black border-l-0 text-center flex pt-[15px] pl-[10px]">
           Posting Location of the member
         </div>
       </div>
-				<div class="border-t table-content">`
+				<div class="table-content">`
 
 		const temp = res.map(item => {
-			return `<div class="flex flex-nowrap text-[20px] -mt-px" style="height: ${
-				+item.rowHigh + 2
-			}px">
-				<div class="w-[96px] flex justify-center items-center border border-black h-full -mt-px">
-					${item.siNo || ''}
+			return `<div class="flex flex-nowrap text-[20px] " style="height: ${+item.rowHigh + 2}px">
+				<div class="w-[96px] flex justify-center items-center border border-black h-full border-t-0 ">
+					${item.SiNo || ''}
 				</div>
 				<div
-					class="w-[159px] flex justify-center items-center border border-black h-full -mt-px -ml-px"
+					class="w-[158px] flex justify-center items-center border border-black h-full  border-l-0 border-t-0"
 				>
-					${item.uan || ''}
+					${item.UAN || ''}
 				</div>
-				<div class="h-full w-[165px] border leading-[20px] border-black flex items-center px-[12px] -mt-px -ml-px">
-					${item.ecr || ''}
+				<div class="h-full w-[164px] border leading-[20px] border-black flex items-center pl-[12px]  border-l-0 border-t-0">
+					${item.ECR || ''}
 				</div>
-				<div class="h-full w-[140px] border leading-[20px] border-black flex items-center px-[12px] -mt-px -ml-px">
-					${item.uanrepository || ''}
+				<div class="h-full w-[139px] border leading-[20px] border-black flex items-center pl-[12px]  border-l-0 border-t-0">
+					${item.UANRepository || ''}
 				</div>
-				<div class="h-full w-[112px] border border-black flex justify-end px-[12px] -mt-px -ml-px">
-					${item.gross || ''}
+				<div class="h-full w-[111px] border border-black flex justify-end px-[12px]  border-l-0 border-t-0">
+					${item.Gross || ''}
 				</div>
-				<div class="h-full w-[112px] border border-black flex justify-end px-[12px] -mt-px -ml-px">
-					${item.epf || ''}
+				<div class="h-full w-[111px] border border-black flex justify-end px-[12px]  border-l-0 border-t-0">
+					${item.EPF || ''}
 				</div>
-				<div class="h-full w-[112px] border border-black flex justify-end px-[12px] -mt-px -ml-px">
-					${item.eps || ''}
+				<div class="h-full w-[111px] border border-black flex justify-end px-[12px]  border-l-0 border-t-0">
+					${item.EPS || ''}
 				</div>
-				<div class="h-full w-[112px] border border-black flex justify-end px-[12px] -mt-px -ml-px">
-					${item.edli || ''}
+				<div class="h-full w-[111px] border border-black flex justify-end px-[12px]  border-l-0 border-t-0">
+					${item.EDLI || ''}
 				</div>
 				<div
-					class="h-full w-[140px] border border-black flex justify-end items-center px-[12px] -mt-px -ml-px"
+					class="h-full w-[139px] border border-black flex justify-end items-center px-[12px]  border-l-0 border-t-0"
 				>
-					${item.ee || ''}
+					${item.EE || ''}
 				</div>
 				<div
-					class="h-full w-[140px] border border-black flex justify-end items-center px-[12px] -mt-px -ml-px"
+					class="h-full w-[139px] border border-black flex justify-end items-center px-[12px]  border-l-0 border-t-0"
 				>
-					${item.creps || ''}
+					${item.CREPS || ''}
 				</div>
 				<div
-					class="h-full w-[140px] border border-black flex justify-end items-center px-[12px] -mt-px -ml-px"
+					class="h-full w-[139px] border border-black flex justify-end items-center px-[12px]  border-l-0 border-t-0"
 				>
-					${item.er || ''}
+					${item.ER || ''}
 				</div>
-				<div class="h-full w-[98px] border border-black flex justify-end px-[12px] -mt-px -ml-px">
-					${item.ncpdays || ''}
-				</div>
-				<div
-					class="h-full w-[140px] border border-black flex items-center justify-end px-[12px] -mt-px -ml-px"
-				>
-					${item.refunds || ''}
+				<div class="h-full w-[96px] border border-black flex justify-end px-[12px]  border-l-0 border-t-0 border-r-0">
+					${item.NCPDays || ''}
 				</div>
 				<div
-					class="h-full w-[140px] border border-black flex items-center justify-end px-[12px] -mt-px -ml-px"
+					class="h-full w-[140px] border border-black flex items-center justify-end px-[12px] border-t-0"
 				>
-					${item.pensionShare ? item.pensionShare : '-'}
+					${item.Refunds || ''}
 				</div>
 				<div
-					class="h-full w-[140px] border border-black flex items-center justify-end px-[12px] -mt-px -ml-px"
+					class="h-full w-[139px] border border-black flex items-center justify-end px-[12px]  border-l-0 border-t-0"
 				>
-					${item.erpfshare ? item.erpfshare : '-'}
+					${item.PensionShare ? item.PensionShare : '-'}
 				</div>
 				<div
-					class="h-full w-[153px] border border-black flex items-center justify-end px-[12px] -mt-px -ml-px"
+					class="h-full w-[139px] border border-black flex items-center justify-end px-[12px]  border-l-0 border-t-0"
 				>
-					${item.eeshare ? item.eeshare : '-'}
+					${item.ERPFShare ? item.ERPFShare : '-'}
 				</div>
 				<div
-					class="h-full w-[146px] border border-black flex items-center justify-end px-[12px] -mt-px -ml-px"
+					class="h-full w-[151px] border border-black flex items-center justify-end px-[12px]  border-l-0 border-t-0 border-r-0"
 				>
-					${item.postingLocationOfTheMember ? item.postingLocationOfTheMember : 'N.A.'}
+					${item.EEShare ? item.EEShare : '-'}
+				</div>
+				<div
+					class="h-full w-[146px] border border-black flex items-center justify-end px-[12px] border-t-0"
+				>
+					${item.PostingLocationofthemember ? item.PostingLocationofthemember : 'N.A.'}
 				</div>
 			</div>`
 		})

@@ -33,6 +33,7 @@
                 $('#translate').on('click', function () {
                     // get json
                     const updatedJson = editor.get()
+                    localStorage.clear();
                     localStorage.setItem("employeeJson", JSON.stringify(updatedJson));
                     location.href = "pdf";
                 });

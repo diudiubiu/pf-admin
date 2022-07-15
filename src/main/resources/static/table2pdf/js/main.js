@@ -29,3 +29,7 @@ function render() {
 }
 render()
 
+function previewAndDown() {
+	window.print()
+}
+

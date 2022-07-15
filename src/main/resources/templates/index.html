@@ -35,12 +35,12 @@
             <div class="panel panel-info">
                 <div class="panel-heading"><h4>Excel to html.</h4></div>
                 <div class="panel-body">
-                    <form action="/excel2html" target="_blank" class="form-horizontal" enctype="multipart/form-data"
+                    <form action="/excel2json" target="_blank" class="form-horizontal" enctype="multipart/form-data"
                           method="post">
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Wage Month</label>
-                                <input class="form-control input-sm" name="wageMonth" type="text" required
+                                <input class="form-control input-sm" id="wageMonth" name="wageMonth" type="text" required
                                        onClick="WdatePicker({dateFmt:'MMM-yyyy'})"></input>
                             </div>
                             <div class="col-sm-6">
@@ -142,3 +142,4 @@
 </div>
 </body>
 </html>
+
