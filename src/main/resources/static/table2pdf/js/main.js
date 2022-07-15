@@ -1,3 +1,8 @@
+if (/macintosh|mac os x/i.test(navigator.userAgent)) {
+  window.system = 'mac'
+} else {
+	window.system = 'window'
+}
 function render() {
 	const {
 		pageDate,
@@ -28,7 +33,6 @@ function render() {
 	renderMemberDetails(pageDate, independentPage, footerFunc)
 }
 render()
-
 function previewAndDown() {
 	window.print()
 }

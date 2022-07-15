@@ -49,7 +49,7 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
             <div class="h-full w-[110px] flex justify-center items-center pl-[10px]">EDLI</div>
           </div>
         </div>
-        <div class="w-[] border border-black border-l-0 flex flex-col">
+        <div class="w-[514px] border border-black border-l-0 flex flex-col">
           <div class="h-[54px] flex justify-center items-center pl-[10px]">
             Contribution Remitted
           </div>
@@ -104,7 +104,7 @@ function renderMemberDetails(pageDate, independentPage, footerFunc) {
 				<div class="table-content">`
 
 		const temp = res.map(item => {
-			return `<div class="flex flex-nowrap text-[20px] " style="height: ${+item.rowHigh + 2}px">
+			return `<div class="flex flex-nowrap text-[20px] " style="height: ${+item.rowHigh + 1}px">
 				<div class="w-[96px] flex justify-center items-center border border-black h-full border-t-0 ">
 					${item.SiNo || ''}
 				</div>

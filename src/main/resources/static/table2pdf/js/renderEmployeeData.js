@@ -91,21 +91,21 @@ function renderEMployee(
             ${data.ecrId || ''}
           </div>
         </div>
-        <div class="flex h-[56px]">
-          <div class="w-[524px] border pl-[12px] border-black border-t-0 flex items-center">
+        <div class="flex h-[55px]">
+          <div class="w-[524px] border pl-[12px] border-black border-t-0 border-b-0 flex items-center">
             Total Members
           </div>
-          <div class="w-[611px] border pl-[12px] border-black border-l-0 border-t-0 flex items-center">${
+          <div class="w-[611px] border pl-[12px] border-black border-l-0 border-t-0 border-b-0 flex items-center">${
 						totalNumber || ''
 					}</div>
-          <div class="w-[483px] border pl-[12px] border-black border-l-0 border-t-0 flex items-center">
+          <div class="w-[483px] border pl-[12px] border-black border-l-0 border-t-0 border-b-0 flex items-center">
            ${data.aadhaarNotSeededMember ? 'Aadhaar Not Seeded Member' : ''}
           </div>
-          <div class="w-[611px] border pl-[12px] border-black ml-[2px]  border-t-0 flex items-center">
+          <div class="w-[611px] border pl-[12px] border-black ml-[2px]  border-t-0  border-b-0 flex items-center">
           ${data.aadhaarNotSeededMember || ''}
           </div>
         </div>
-        <div class="flex h-[56px] -mt-px">
+        <div class="flex h-[56px]">
           <div class="w-[2229px] border pl-[12px] font-bold border-black flex items-center">
             Contribution and Remittance Details (In Rupees) :
           </div>

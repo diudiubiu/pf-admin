@@ -39,8 +39,8 @@ function renderRemarks(independentPage, footer) {
                 Parallel Employment: ECR already filed for this
               </div>
             </div>
-            <div class="flex flex-1 ">
-              <div class="w-[279px] border border-black flex justify-center items-center">
+            <div class="flex flex-1">
+              <div class="w-[279px] border border-black border-t-0 flex justify-center items-center">
                 EC10003
               </div>
               <div class="w-[722px] border pl-[12px] border-black  border-l-0 border-t-0 flex items-center">
