@@ -4,6 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import org.thymeleaf.util.StringUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,7 +48,23 @@ public class ExcelOperationHelp {
      * @param strUan
      * @return
      */
+
     public static String uanStrOpt(String strUan) {
+        String[] strArr = strUan.replaceAll("\\t", "#").replaceAll(" ", "#").split("#");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strArr.length; i++) {
+            if (strArr[i].length() > 8) {
+                String s = stringInsertByInterval(strArr[i], "<br/>", 8);
+                sb.append(s);
+            } else {
+                String s = strArr[i] + "<br/>";
+                sb.append(s);
+            }
+        }
+        return StrUtil.removeSuffix(sb.toString(), "<br/>");
+    }
+
+    public static String uanStrOpt2(String strUan) {
         String str = strTrimExt(strUan);
         return str.length() > 8 ? stringInsertByInterval(str, "<br/>", 8) : str;
     }
@@ -78,6 +95,13 @@ public class ExcelOperationHelp {
      * @param strEcr
      * @return
      */
+
+    //public static String ecrStrOpt(String strEcr) {
+    //    if (strEcr.length() < 12) {
+    //        return strEcr;
+    //    }
+    //    return strEcr.replaceAll("\\s*", "<br/>");
+    //}
     public static String ecrStrOpt(String strEcr) {
         if (strEcr.length() < 12) {
             return strEcr;
@@ -96,33 +120,48 @@ public class ExcelOperationHelp {
      * @return
      */
     public static double rowHigh(String strEcr) {
-        int high = 55;
-        int maxStrLen = 10;
-        int spaceCaseNumber = 0;
-
-        int len = strEcr.length();
-        if (len >= maxStrLen) {
-            spaceCaseNumber = 1;
+        int afewLines = StrUtil.split(uanStrOpt(strEcr), "<br/>").size();
+        int high = 54;
+        if (afewLines == 1) {
+            high = 54;
         }
-        for (int i = 0; i < len; i++) {
-            char cEcr = strEcr.charAt(i);
-            //空格
-            if (Character.isSpaceChar(cEcr)) {
-                spaceCaseNumber++;
-            }
+        if (afewLines == 2) {
+            high = 55;
         }
-        switch (spaceCaseNumber) {
-            case 2:
-                high = 66;
-                break;
-            case 3:
-                high = 88;
-                break;
-            default:
-                high = 55;
+        if (afewLines == 3) {
+            high = 66;
         }
         return high;
     }
+
+    //public static double rowHighBak(String strEcr) {
+    //    int high = 55;
+    //    int maxStrLen = 12;
+    //    int spaceCaseNumber = 0;
+    //
+    //    int len = strEcr.length();
+    //    if (len >= maxStrLen) {
+    //        spaceCaseNumber = 1;
+    //    }
+    //    for (int i = 0; i < len; i++) {
+    //        char cEcr = strEcr.charAt(i);
+    //        //空格
+    //        if (Character.isSpaceChar(cEcr)) {
+    //            spaceCaseNumber++;
+    //        }
+    //    }
+    //    switch (spaceCaseNumber) {
+    //        case 2:
+    //            high = 66;
+    //            break;
+    //        case 3:
+    //            high = 88;
+    //            break;
+    //        default:
+    //            high = 55;
+    //    }
+    //    return high;
+    //}
 
     /**
      * 四舍五入，不保留小数点。
@@ -131,7 +170,7 @@ public class ExcelOperationHelp {
      * @param d
      * @return
      */
-    public static String lakhFormattedComma(Double d) {
+    public static String lakhFormattedCommaBak(Double d) {
         String dStr = NumberUtil.round(d, 0).toString();
         String out = "";
         int len = dStr.length();
@@ -149,6 +188,19 @@ public class ExcelOperationHelp {
         return out;
     }
 
+    public static String lakhFormattedComma(double value) {
+        if (value < 1000) {
+            return format("###", value);
+        } else {
+            double hundreds = value % 1000;
+            int other = (int) (value / 1000);
+            return format(",##", other) + ',' + format("000", hundreds);
+        }
+    }
+
+    private static String format(String pattern, Object value) {
+        return new DecimalFormat(pattern).format(value);
+    }
 
     public static void main(String[] args) {
 
@@ -186,8 +238,8 @@ public class ExcelOperationHelp {
         //1,59,085
         //48,661
         //String str1 = lakhFormattedComma(14804.76000000002);
-        //String str2 = lakhFormattedComma(99048661.1234);
-        //System.out.println(str1);
+        //String str2 = stringFilter("abads 9fdfdsafafad      2 1 5");
+        //System.out.println(str2);
         //
         //System.out.println(str2);
         //
@@ -199,7 +251,26 @@ public class ExcelOperationHelp {
         //String str = uanStrOpt("SANGEETHAELUMALAI");
 
         //System.out.println(33/8);
-        System.out.println(StrUtil.sub("adfadsasffasdf\n123",0,-1));
+        // System.out.println(StrUtil.sub("adfadsasffasdf\n123",0,-1));
 
+        //String str2 = uanStrOpt("Rudra Pratap Singh");
+        //System.out.println(str2);
+        //
+        //
+        //
+        ////ExcelReader reader = ExcelUtil.getReader("/Users/chenchencui/Downloads/ecr/June  2021(1).xls");
+        ////List<List<Object>> readAll = reader.read();
+        ////for (List<Object> objects : readAll) {
+        ////     String str23 = uanStrOpt(String.valueOf(objects.get(1)));
+        ////    System.out.println(str23);
+        ////}
+        //String[] s= "Rajdhani<br/>".split("<br/>");
+        //System.out.println(s.length);
+        //int i = StrUtil.split("Rajdhani<br/>aaa", "<br/>").size();
+
+
+        String str1 =ExcelOperationHelp.isNumberForRound("16.4");
+
+        System.out.println(str1);
     }
 }

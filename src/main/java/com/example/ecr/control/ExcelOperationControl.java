@@ -35,12 +35,12 @@ public class ExcelOperationControl {
 
     double startTableHigh = 1316 - 138 - 55;
     double middleTableHigh = 1371 - 138 - 55;
-    double endTableHigh = 1371 - 138 - 631 + 100;
+    double endTableHigh = 1371 - 138 - 55 - 631;
 
     @PostMapping("/excel2json")
     public String excel2html(Model model, MultipartFile file, EmployeeData employeeData) throws IOException {
 
-        int linePx = 1, page = 1, siNo = 0;
+        int linePx = 0, page = 1, siNo = 0;
         double rowHigh = 0, gSum = 0, hSum = 0, iSum = 0;
         String gStr, hStr, iStr;
 
@@ -63,8 +63,13 @@ public class ExcelOperationControl {
             double rh = ExcelOperationHelp.rowHigh(strEcr);
             memberDetails.setRowHigh(rh);
             rowHigh += rh + linePx;
-            memberDetails.setECR(ExcelOperationHelp.ecrStrOpt(strEcr));
+
+            //memberDetails.setECR(ExcelOperationHelp.ecrStrOpt(strEcr));
+            memberDetails.setECR(strEcr);
+
             memberDetails.setUANRepository(ExcelOperationHelp.uanStrOpt(strEcr.toUpperCase()));
+            //memberDetails.setUANRepository(strEcr.toUpperCase());
+
             memberDetails.setGross(ExcelOperationHelp.lakhFormattedComma(Double.parseDouble(String.valueOf(objects.get(2)))));
             memberDetails.setEPF(ExcelOperationHelp.lakhFormattedComma(Double.parseDouble(String.valueOf(objects.get(3)))));
             memberDetails.setEPS(ExcelOperationHelp.lakhFormattedComma(Double.parseDouble(String.valueOf(objects.get(4)))));
@@ -82,7 +87,7 @@ public class ExcelOperationControl {
             iSum += Double.parseDouble(iStr);
             memberDetails.setER(ExcelOperationHelp.lakhFormattedComma(Double.parseDouble(iStr)));
 
-            memberDetails.setNCPDays(String.valueOf(objects.get(9)));
+            memberDetails.setNCPDays(ExcelOperationHelp.isNumberForRound(String.valueOf(objects.get(9))));
             memberDetails.setRefunds(String.valueOf(objects.get(10)));
 
             if (rowHigh >= startTableHigh && page == 1) {
@@ -111,8 +116,8 @@ public class ExcelOperationControl {
         htmlData.setTotalNumber(siNo);
         htmlData.setEmployeeData(employeeData);
         htmlData.setPageDate(pageDataMap);
-        //log.info("htmlData:,{}", htmlData);
         JSONObject json = JSONUtil.parseObj(htmlData);
+        log.info("json:,{}", json);
         model.addAttribute("htmlData", json);
         //log.info("htmlData:,{}", json);
         //FileWriter writer = new FileWriter("json.data");
