@@ -134,6 +134,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-10">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h4>upload to pdf.</h4></div>
+                <div class="panel-body">
+                    <form action="/uploadPdf" class="form-horizontal" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="excel_upload_txt">Choose excel to upload</label>
+                                <input required accept="application/vnd.ms-excel" id="excel_upload_txt" name="file"
+                                       type="file"></input></div>
+                        </div>
+                        <input class="btn btn-default" type="submit" value="Submit"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
         <p class="lead">&nbsp;
         </p>
     </div>

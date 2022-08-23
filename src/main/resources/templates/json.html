@@ -7,6 +7,7 @@
     <script src="jsoneditor/jsoneditor.min.js"></script>
     <script src="jquery.min.js"></script>
     <title>ECR_json</title>
+
 </head>
 <body>
 <div class="container">
@@ -35,12 +36,14 @@
                     const updatedJson = editor.get()
                     localStorage.clear();
                     localStorage.setItem("employeeJson", JSON.stringify(updatedJson));
+                    localStorage.setItem("pdfName", document.getElementById("pdfName").value);
                     location.href = "pdf";
                 });
             </script>
         </div>
     </div>
     <p class="lead">&nbsp;
+        <input hidden id="pdfName" th:value = "${pdfName}" />
     </p>
 </div>
 </body>

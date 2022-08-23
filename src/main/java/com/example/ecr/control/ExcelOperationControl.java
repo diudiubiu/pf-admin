@@ -6,12 +6,15 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.example.ecr.entity.RecentEcr;
 import com.example.ecr.pojo.EmployeeData;
 import com.example.ecr.pojo.HtmlData;
 import com.example.ecr.pojo.MemberDetails;
+import com.example.ecr.repository.RecentEcrRepository;
 import com.example.ecr.util.ExcelOperationHelp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,8 @@ import java.util.Map;
  */
 @Controller
 public class ExcelOperationControl {
-
+    @Autowired
+    RecentEcrRepository recentEcrRepository;
     static Logger log = LoggerFactory.getLogger(ExcelOperationControl.class);
 
     double startTableHigh = 1316 - 138 - 55;
@@ -117,11 +121,28 @@ public class ExcelOperationControl {
         htmlData.setEmployeeData(employeeData);
         htmlData.setPageDate(pageDataMap);
         JSONObject json = JSONUtil.parseObj(htmlData);
-        log.info("json:,{}", json);
+        //log.info("json:,{}", json);
         model.addAttribute("htmlData", json);
+
         //log.info("htmlData:,{}", json);
         //FileWriter writer = new FileWriter("json.data");
         //writer.write(String.valueOf(json));
+        String pdfName = "DSNHP2111338000_"+System.currentTimeMillis();
+        String txtName = "Shashi april_"+System.currentTimeMillis();
+        RecentEcr recentEcr = new RecentEcr();
+        recentEcr.setTrrn(employeeData.getTrrnNumber());
+        recentEcr.setWageMonth(employeeData.getWageMonth());
+        recentEcr.setEcrType("ECR");
+        recentEcr.setSalaryDisbDate(employeeData.getSalaryDisbursementDate());
+        recentEcr.setContrRate("12");
+        recentEcr.setUploadDate(employeeData.getUploadedDateTime());
+        recentEcr.setStatus("Payment confirmed");
+        recentEcr.setEcrFilePath(txtName);
+        recentEcr.setEcrStatementPath(pdfName);
+        recentEcrRepository.save(recentEcr);
+
+        model.addAttribute("pdfName", pdfName);
+
         return "json";
     }
 
@@ -166,6 +187,11 @@ public class ExcelOperationControl {
         }
         return "success";
     }
+    @PostMapping("/uploadPdf")
+    public String uploadPdf(MultipartFile file, HttpServletResponse response) throws IOException {
+        file.getInputStream();
+        return null;
 
+    }
 
 }

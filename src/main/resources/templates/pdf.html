@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="./table2pdf/css/index.css" />
 		<title>ECR_pdf</title>
+		<script type="text/javascript">
+			document.title = localStorage.getItem("pdfName");
+		</script>
 	</head>
-	<script type="text/javascript">
-		let time_hm = new Date().getTime()
-		document.title = 'DSNHP2111338000_' + time_hm
-	</script>
 	<body>
 		<button onclick="previewAndDown()" style="position: fixed; z-index: 100">SavePDF</button>
 		<div class="container">
@@ -34,7 +33,7 @@
 					</div>
 				</div> -->
 				<img src="./table2pdf/img/logo.jpg" alt="" />
-				<div class="employeeData pl-[53px]"></div>
+				<div class="employeeData pl-[54px]"></div>
 			</div>
 			<div class="content"></div>
 		</div>
@@ -43,6 +42,7 @@
 		<script src="./table2pdf/js/renderEmployeeData.js"></script>
 		<script src="./table2pdf/js/renderMemberDetails.js"></script>
 		<script src="./table2pdf/js/main.js"></script>
+
 	</body>
 </html>
 
