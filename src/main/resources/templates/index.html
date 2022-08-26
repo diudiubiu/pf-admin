@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <link href="bootstrap.min.css" rel="stylesheet">
-    <script src="My97DatePicker/WdatePicker.js"></script>
-    <title>ECR_index</title>
+    <script src="jquery.min.js"></script>
+    <script src="jq-paginator.min.js"></script>
+    <title>pf_index</title>
 </head>
 <body>
 <div class="container">
@@ -15,140 +13,35 @@
     <h3>ECR</h3></p>
     <hr/>
     <div class="row">
-        <div class="col-md-10">
-            <div class="panel panel-info">
-                <div class="panel-heading"><h4>Excel to txt.</h4></div>
-                <div class="panel-body">
-                    <form action="/excel2txt" class="form-horizontal" enctype="multipart/form-data" method="post">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="excel_upload_txt">Choose excel to upload</label>
-                                <input required accept="application/vnd.ms-excel" id="excel_upload_txt" name="file"
-                                       type="file"></input></div>
-                        </div>
-                        <input class="btn btn-default" type="submit" value="Submit"></input>
-                    </form>
-                </div>
-            </div>
+        <div class="col-md-2 sidebar-offcanvas">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="/index">index</a></li>
+                <li class="list-group-item"><a href="/e2txt">excel2txt</a></li>
+                <li class="list-group-item"><a href="/e2pdf">excel2pdf</a></li>
+            </ul>
         </div>
         <div class="col-md-10">
-            <div class="panel panel-info">
-                <div class="panel-heading"><h4>Excel to html.</h4></div>
-                <div class="panel-body">
-                    <form action="/excel2json" target="_blank" class="form-horizontal" enctype="multipart/form-data"
-                          method="post">
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <label>Wage Month</label>
-                                <input class="form-control input-sm" id="wageMonth" name="wageMonth" type="text" required
-                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"></input>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Return Month</label>
-                                <input class="form-control input-sm" name="returnMonth" type="text" required
-                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"></input>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <label>Salary Disbursement Date</label>
-                                <input class="form-control input-sm" name="salaryDisbursementDate" type="text"
-                                       required
-                                       onClick="WdatePicker({dateFmt:'dd-MMM-yyyy'})"></input>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Uploaded Date Time</label>
-                                <input class="form-control input-sm" name="uploadedDateTime" type="text"
-                                       required
-                                       onClick="WdatePicker({dateFmt:'dd-MMM-yyyy HH:mm'})"></input>
-                            </div>
-                        </div>
+            <form action="/uploadPdfAndTxt" class="form-horizontal" enctype="multipart/form-data" method="post">
 
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label>Exemption Status</label>
-                                <input class="form-control input-sm" name="exemptionStatus" type="text"
-                                       required></input>
-                            </div>
-                            <div class="col-sm-3">
-                                <label>TRRN Number</label>
-                                <input class="form-control input-sm" name="trrnNumber" type="text"></input>
-                            </div>
-                            <div class="col-sm-3">
-                                <label>Remarks</label>
-                                <input class="form-control input-sm" name="remarks" type="text"
-                                       required></input>
-                            </div>
-                            <div class="col-sm-3">
-                                <label>ECR Id</label>
-                                <input class="form-control input-sm" name="ecrId" type="number" min="0" max="99999999"
-                                       step="1"
-                                       required></input>
-                            </div>
-                        </div>
+                    <table id="recentEcr" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>fileName</th>
+                            <th>status</th>
+                            <th>uploadDate</th>
+                            <th>lookup</th>
+                            <th>pdf/txt</th>
+                            <th>upload</th>
+                            <th>download</th>
+                        </tr>
+                        </thead>
 
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <label>Aadhaar Not Seeded Member</label>
-                                <input class="form-control input-sm" name="aadhaarNotSeededMember" type="number" min="0"
-                                       max="99999999" step="1"></input>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Total Refund Advance</label>
-                                <input class="form-control input-sm" name="totalRefundAdvance" type="text"></input>
-                            </div>
-                        </div>
+                        <tbody id="tbody"></tbody>
+                    </table>
+             </form>
 
-                        <div class="form-group">
-                            <div class="col-sm-4">
-                                <label>Employee EPF Share</label>
-                                <input class="form-control input-sm" name="employeeEPFShare" type="number" min="0"
-                                       max="99999999" step="1" required></input>
-                            </div>
-                            <div class="col-sm-4">
-                                <label>Employer EPS Share</label>
-                                <input class="form-control input-sm" name="employerEPSShare" type="number" min="0"
-                                       max="99999999" step="1" required></input>
-                            </div>
-                            <div class="col-sm-4">
-                                <label>Employer EPF Share</label>
-                                <input class="form-control input-sm" name="employerEPFShare" type="number" min="0"
-                                       max="99999999" step="1"></input>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label>ABRY benefit remarks</label>
-                                <textarea name="abryBenefitRemarks" class="form-control" rows="2"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="excel_upload_html">Choose excel to upload</label>
-                                <input required accept="application/vnd.ms-excel" id="excel_upload_html" name="file"
-                                       type="file"></input>
-                            </div>
-                        </div>
-                        <input class="btn btn-default" type="submit" value="Submit"></input>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-10">
-            <div class="panel panel-info">
-                <div class="panel-heading"><h4>upload to pdf.</h4></div>
-                <div class="panel-body">
-                    <form action="/uploadPdf" class="form-horizontal" enctype="multipart/form-data" method="post">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="excel_upload_txt">Choose excel to upload</label>
-                                <input required accept="application/vnd.ms-excel" id="excel_upload_txt" name="file"
-                                       type="file"></input></div>
-                        </div>
-                        <input class="btn btn-default" type="submit" value="Submit"></input>
-                    </form>
-                </div>
-            </div>
+            <ul id="pageNav" class="pagination text-right"></ul>
         </div>
         <p class="lead">&nbsp;
         </p>
@@ -156,4 +49,79 @@
 </div>
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.get("/getRecentList", function (data, status) {
+            console.log(data, status, "getRecentList");
+            var tbody = $("#tbody");
+            for (var data of data.content) {
+                var tr = tbody.append(`<tr>
+                    <td>${data.id}</td>
+                    <td>${data.ecrStatementPath}</td>
+                    <td>${data.hasUploadFile}</td>
+                    <td>${data.uploadDate}</td>
+                    <td><a target="_blank" href="/upload/${data.ecrStatementPath}">pdf</a>
+                    <a target="_blank" href="/upload/${data.ecrFilePath}">txt</a></td>
+                    <td>PDF:<input placeholder="pdf" id="upload_pdf" accept=".pdf" name="file" type="file"></input><br/>
+                        TXT:<input placeholder="txt" id="upload_txt" accept=".txt" name="file" type="file"></input></td>
+                    <td><input class="btn btn-primary" type="button" onclick="uploadClick(${data.id})" value="upload"></input></td>
+                    <td><input class="btn btn-success" type="button" onclick="downloadClick('123','${data.ecrStatementPath}')" value="download"></input></td>
+                </tr`);
+            }
+        }, 'json');
 
+        $('#pageNav').jqPaginator({
+            totalPages: 100,
+            visiblePages: 15,
+            currentPage: 1,
+            onPageChange: function (num, type) {
+                //$('#text').html('当前第' + num + '页');
+            }
+        });
+
+
+    });
+
+    function uploadClick(id) {
+        var upload_pdf = $("#upload_pdf")[0].files[0];
+        var upload_txt = $("#upload_txt")[0].files[0];
+        if (upload_pdf != '') {
+            // 构建数据
+            var fileData = new FormData();
+            fileData.append('id', id);
+            fileData.append('file', upload_pdf); // file 对象
+            if (upload_txt != '') {
+                fileData.append('file', upload_txt); // file 对象
+            }
+            $.ajax('/uploadPdfAndTxt', {
+                method: 'POST',
+                data: fileData,
+                processData: false, // 默认 | 不处理数据
+                contentType: false, // 默认 | 不设置内容类型
+                success: function (res) {
+                    console.log(res);
+                    if (res == 'success') {
+                        //$("#id").addClass("btn-success");
+                        alert('upload success!!!');
+                    }
+                }
+            })
+        }
+    }
+    function downloadClick(str,fileName) {
+        //location.href = '/download?fileName='+fileName;
+        window.open('/download?fileName='+fileName);
+        // $.ajax('/download', {
+        //     method: 'POST',
+        //     data: {fileName: fileName},
+        //     success: function (res) {
+        //         console.log(res);
+        //         if (res == 'success') {
+        //             //$("#id").addClass("btn-success");
+        //             alert('download success!!!');
+        //         }
+        //     }
+        // })
+    }
+
+</script>

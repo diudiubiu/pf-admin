@@ -1,6 +1,7 @@
 package com.example.ecr.control;
 
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -23,19 +24,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Hs
  */
 @Controller
 public class ExcelOperationControl {
-    @Autowired
-    RecentEcrRepository recentEcrRepository;
+
     static Logger log = LoggerFactory.getLogger(ExcelOperationControl.class);
+
+    RecentEcrRepository recentEcrRepository;
+
+    @Autowired
+    public void setRecentEcrRepository(RecentEcrRepository recentEcrRepository) {
+        this.recentEcrRepository = recentEcrRepository;
+    }
 
     double startTableHigh = 1316 - 138 - 55;
     double middleTableHigh = 1371 - 138 - 55;
@@ -127,8 +131,10 @@ public class ExcelOperationControl {
         //log.info("htmlData:,{}", json);
         //FileWriter writer = new FileWriter("json.data");
         //writer.write(String.valueOf(json));
-        String pdfName = "DSNHP2111338000_"+System.currentTimeMillis();
-        String txtName = "Shashi april_"+System.currentTimeMillis();
+
+        //DSNHP2111338000_69549346_1645421713009_2022022139913009442
+        String pdfName = ExcelOperationHelp.assemblePdfName(employeeData.getEcrId());
+        String txtName = "Shashi april_" + "123456789";
         RecentEcr recentEcr = new RecentEcr();
         recentEcr.setTrrn(employeeData.getTrrnNumber());
         recentEcr.setWageMonth(employeeData.getWageMonth());
@@ -174,7 +180,7 @@ public class ExcelOperationControl {
         byte[] fileData = txtStr.getBytes();
 
         // 将文件内容 byte[]，通过 response 返回给客户端进行下载
-        if (fileData.length > 0) {
+        if (fileData != null && fileData.length > 0) {
             try {
                 response.setContentType("application/octet-stream");
                 response.setHeader("Content-disposition", "attachment; filename=up" + System.currentTimeMillis() + ".txt");
@@ -187,11 +193,6 @@ public class ExcelOperationControl {
         }
         return "success";
     }
-    @PostMapping("/uploadPdf")
-    public String uploadPdf(MultipartFile file, HttpServletResponse response) throws IOException {
-        file.getInputStream();
-        return null;
 
-    }
 
 }

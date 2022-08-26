@@ -11,8 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminControl {
 
     @RequestMapping("")
+    public String defaultPage() {
+        return index();
+    }
+    @RequestMapping("/index")
     public String index() {
         return "index";
+    }
+    @RequestMapping("/e2txt")
+    public String e2txt() {
+        return "e2txt";
+    }
+    @RequestMapping("/e2pdf")
+    public String e2pdf() {
+        return "e2pdf";
     }
 
     @RequestMapping("test")
@@ -29,7 +41,6 @@ public class AdminControl {
         model.addAttribute("htmlData", json);
         return "json";
     }
-
     @RequestMapping("pdf")
     public String pdf() {
         return "pdf";

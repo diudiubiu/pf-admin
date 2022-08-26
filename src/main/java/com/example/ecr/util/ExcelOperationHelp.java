@@ -1,5 +1,6 @@
 package com.example.ecr.util;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.thymeleaf.util.StringUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,7 +89,7 @@ public class ExcelOperationHelp {
         }
 
         if (strArr.length == 3) {
-            if(strArr[0].length()==1){
+            if (strArr[0].length() == 1) {
                 inStr_m8 = inStr_m8.replaceFirst("<br/>", "&nbsp;");
             }
         }
@@ -101,8 +104,36 @@ public class ExcelOperationHelp {
         return str.length() > 8 ? stringInsertByInterval(str, "<br/>", 8) : str;
     }
 
-    public static void main(String[] args) {
+    public static String assemblePdfName(String ecrId) {
+        long sct = System.currentTimeMillis();
+        Date date2 = DateUtil.date(Calendar.getInstance());
+        String formatDate = DateUtil.format(date2, "yyyyMMddHHmmssSSSSS");
+        //69549346_1645421713009
 
+        StringBuffer sb = new StringBuffer();
+        sb.append("DSNHP2111338000_");
+        if(StrUtil.isEmpty(ecrId)){
+            int[] iArr =  NumberUtil.generateRandomNumber(0, 9, 8);
+            for (int i = 0; i < iArr.length; i++) {
+                sb.append(iArr[i]);
+            }
+        }else{
+            sb.append(ecrId);
+        }
+        sb.append("_");
+        sb.append(sct);
+        sb.append("_");
+        sb.append(formatDate);
+        sb.append(".pdf");
+
+        return sb.toString();
+    }
+
+
+    public static void main(String[] args) {
+        //DSNHP2111338000_69549346_1645421713009_2022022139913009442
+        //DSNHP2111338000_         1661482871727_2022082611011100727
+        log.info("{}", assemblePdfName("69549346"));
         //int i = StrUtil.split("Rajdhani<br/>aaa", "<br/>").size();
 
         //Meena Anbazhagan

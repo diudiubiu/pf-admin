@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>ecr-admin</artifactId>
+    <artifactId>pf-admin</artifactId>
     <version>0.0.1-Beta</version>
     <name>ecr</name>
-    <description>ecr</description>
+    <description>pf-admin</description>
 
     <dependencies>
         <dependency>

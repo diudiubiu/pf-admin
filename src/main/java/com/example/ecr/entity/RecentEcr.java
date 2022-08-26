@@ -26,4 +26,5 @@ public class RecentEcr {
     //pdf下载
     private String ecrStatementPath;
 
+    private boolean hasUploadFile;
  }

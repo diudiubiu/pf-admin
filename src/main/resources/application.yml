@@ -22,6 +22,16 @@ spring:
   thymeleaf:
     cache: false
     mode: html
+  servlet:
+    multipart:
+      #location: /tmp
+      max-file-size: 2MB
+      max-request-size: 10MB
+file:
+  staticAccessPath: /upload/**
+  uploadFolder: /Users/chenchencui/Downloads/upload/
+
+
 #开启日志 如果级别：off(少)>error>warn>info>debug(多)>all
 logging:
   level:
