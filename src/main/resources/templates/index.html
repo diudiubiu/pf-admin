@@ -55,9 +55,10 @@
             console.log(data, status, "getRecentList");
             var tbody = $("#tbody");
             for (var data of data.content) {
+                var ecrStatementPath = data.ecrStatementPath.replace("_", "<br/>");
                 var tr = tbody.append(`<tr>
                     <td>${data.id}</td>
-                    <td>${data.ecrStatementPath}</td>
+                    <td>${ecrStatementPath}</td>
                     <td>${data.hasUploadFile}</td>
                     <td>${data.uploadDate}</td>
                     <td><a target="_blank" href="/upload/${data.ecrStatementPath}">pdf</a>
