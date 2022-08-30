@@ -7,24 +7,61 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class AdminControl {
 
     @RequestMapping("")
     public String defaultPage() {
-        return index();
+        return ecr6ReturnFiling();
     }
-    @RequestMapping("/index")
-    public String index() {
-        return "index";
+
+    @RequestMapping("/epfo")
+    public String epfo() {
+        return "login-epfo";
+    }
+
+    @RequestMapping("/txtpdf2pf4ecr")
+    public String txtpdf2pf4ecr() {
+        return "matching-txtpdf2pf4ecr";
+    }
+    @RequestMapping("/pdfpdf2pf4challans")
+    public String pdfpdf2pf4challans() {
+        return "matching-pdfpdf2pf4challans";
+    }
+
+    @RequestMapping("/login")
+    public String login(String user, String pwd, HttpServletRequest request) {
+        HttpSession mySession = request.getSession();
+        mySession.setAttribute("userName", user);
+        mySession.setAttribute("lin", "1867777921");
+
+        return "ecr6ReturnFiling";
+    }
+
+    @RequestMapping("/ecr6ReturnFiling")
+    public String ecr6ReturnFiling() {
+        return "ecr6ReturnFiling";
+    }
+    @RequestMapping("/ecr6Payment")
+    public String ecr6Payment() {
+        return "ecr6Payment";
     }
     @RequestMapping("/e2txt")
     public String e2txt() {
-        return "e2txt";
+        return "upload-e2txt4upecr";
     }
-    @RequestMapping("/e2pdf")
-    public String e2pdf() {
-        return "e2pdf";
+
+    @RequestMapping("/e2ecr4pdf")
+    public String e2ecr4pdf() {
+        return "upload-e2ecr4pdf";
+    }
+
+    @RequestMapping("/e2challans4pdf")
+    public String e2challans4pdf() {
+        return "upload-e2challans4pdf";
     }
 
     @RequestMapping("test")
@@ -41,6 +78,7 @@ public class AdminControl {
         model.addAttribute("htmlData", json);
         return "json";
     }
+
     @RequestMapping("pdf")
     public String pdf() {
         return "pdf";

@@ -10,19 +10,23 @@
     <title>ECR_txt</title>
 </head>
 <body>
-<div class="container">
-    <p class="lead">
-    <h3>ECR_txt</h3></p>
-    <hr/>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>
+            ECR
+        </h3>
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
+            <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
+        </ul><ul class="nav nav-pills"><li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+            <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
+            <li class="active" role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
+            <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
+            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
+        </ul>
+    </div>
     <div class="row">
-        <div class="col-md-2 sidebar-offcanvas">
-            <ul class="list-group">
-                <li class="list-group-item"><a href="/index">index</a></li>
-                <li class="list-group-item"><a href="/e2txt">excel2txt</a></li>
-                <li class="list-group-item"><a href="/e2pdf">excel2pdf</a></li>
-            </ul>
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading"><h4>Excel to txt.</h4></div>
                 <div class="panel-body">
@@ -30,7 +34,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label for="excel_upload_txt">Choose excel to upload</label>
-                                <input required accept="application/vnd.ms-excel" id="excel_upload_txt" name="file"
+                                <input accept=".xls,.xlsx" id="excel_upload_txt" name="file" required
                                        type="file"></input></div>
                         </div>
                         <input class="btn btn-default" type="submit" value="Submit"></input>

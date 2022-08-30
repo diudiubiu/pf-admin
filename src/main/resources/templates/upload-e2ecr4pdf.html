@@ -11,60 +11,64 @@
     <title>pf_index</title>
 </head>
 <body>
-<div class="container">
-    <p class="lead">
-    <h3>ECR_pdf</h3></p>
-    <hr/>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>
+            ECR
+        </h3>
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
+            <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
+        </ul><ul class="nav nav-pills"><li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+            <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
+            <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
+            <li class="active" role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
+            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
+        </ul>
+    </div>
     <div class="row">
-        <div class="col-md-2 sidebar-offcanvas">
-            <ul class="list-group">
-                <li class="list-group-item"><a href="/index">index</a></li>
-                <li class="list-group-item"><a href="/e2txt">excel2txt</a></li>
-                <li class="list-group-item"><a href="/e2pdf">excel2pdf</a></li>
-            </ul>
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading"><h4>Excel to html.</h4></div>
                 <div class="panel-body">
-                    <form action="/excel2json" target="_blank" class="form-horizontal" enctype="multipart/form-data"
-                          method="post">
+                    <form action="/excel2json" class="form-horizontal" enctype="multipart/form-data" method="post"
+                          target="_blank">
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Wage Month</label>
-                                <input class="form-control input-sm" id="wageMonth" name="wageMonth" type="text"
+                                <input class="form-control input-sm" id="wageMonth" name="wageMonth" onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
                                        required
-                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"></input>
+                                       type="text"></input>
                             </div>
                             <div class="col-sm-6">
                                 <label>Return Month</label>
-                                <input class="form-control input-sm" id="returnMonth" name="returnMonth" type="text"
+                                <input class="form-control input-sm" id="returnMonth" name="returnMonth" onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
                                        required
-                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"></input>
+                                       type="text"></input>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Salary Disbursement Date</label>
                                 <input class="form-control input-sm" id="salaryDisbursementDate"
-                                       name="salaryDisbursementDate" type="text"
+                                       name="salaryDisbursementDate" onClick="WdatePicker({dateFmt:'dd-MMM-yyyy'})"
                                        required
-                                       onClick="WdatePicker({dateFmt:'dd-MMM-yyyy'})"></input>
+                                       type="text"></input>
                             </div>
                             <div class="col-sm-6">
                                 <label>Uploaded Date Time</label>
                                 <input class="form-control input-sm" id="uploadedDateTime" name="uploadedDateTime"
-                                       type="text"
+                                       onClick="WdatePicker({dateFmt:'dd-MMM-yyyy HH:mm'})"
                                        required
-                                       onClick="WdatePicker({dateFmt:'dd-MMM-yyyy HH:mm'})"></input>
+                                       type="text"></input>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-3">
                                 <label>Exemption Status</label>
-                                <input class="form-control input-sm" name="exemptionStatus" type="text"
-                                       required></input>
+                                <input class="form-control input-sm" name="exemptionStatus" required
+                                       type="text"></input>
                             </div>
                             <div class="col-sm-3">
                                 <label>TRRN Number</label>
@@ -72,22 +76,22 @@
                             </div>
                             <div class="col-sm-3">
                                 <label>Remarks</label>
-                                <input class="form-control input-sm" name="remarks" type="text"
-                                       required></input>
+                                <input class="form-control input-sm" name="remarks" required
+                                       type="text"></input>
                             </div>
                             <div class="col-sm-3">
                                 <label>ECR Id</label>
-                                <input class="form-control input-sm" name="ecrId" type="number" min="0" max="99999999"
-                                       step="1" value="12345678"
-                                       required></input>
+                                <input class="form-control input-sm" max="99999999" min="0" name="ecrId" required
+                                       step="1" type="number"
+                                       value="12345678"></input>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Aadhaar Not Seeded Member</label>
-                                <input class="form-control input-sm" name="aadhaarNotSeededMember" type="number" min="0"
-                                       max="99999999" step="1"></input>
+                                <input class="form-control input-sm" max="99999999" min="0" name="aadhaarNotSeededMember"
+                                       step="1" type="number"></input>
                             </div>
                             <div class="col-sm-6">
                                 <label>Total Refund Advance</label>
@@ -98,30 +102,30 @@
                         <div class="form-group">
                             <div class="col-sm-4">
                                 <label>Employee EPF Share</label>
-                                <input class="form-control input-sm" name="employeeEPFShare" type="number" min="0"
-                                       max="99999999" step="1" required></input>
+                                <input class="form-control input-sm" max="99999999" min="0" name="employeeEPFShare"
+                                       required step="1" type="number"></input>
                             </div>
                             <div class="col-sm-4">
                                 <label>Employer EPS Share</label>
-                                <input class="form-control input-sm" name="employerEPSShare" type="number" min="0"
-                                       max="99999999" step="1" required></input>
+                                <input class="form-control input-sm" max="99999999" min="0" name="employerEPSShare"
+                                       required step="1" type="number"></input>
                             </div>
                             <div class="col-sm-4">
                                 <label>Employer EPF Share</label>
-                                <input class="form-control input-sm" name="employerEPFShare" type="number" min="0"
-                                       max="99999999" step="1"></input>
+                                <input class="form-control input-sm" max="99999999" min="0" name="employerEPFShare"
+                                       step="1" type="number"></input>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label>ABRY benefit remarks</label>
-                                <textarea name="abryBenefitRemarks" class="form-control" rows="2"></textarea>
+                                <textarea class="form-control" name="abryBenefitRemarks" rows="2"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label for="excel_upload_html">Choose excel to upload</label>
-                                <input required accept="application/vnd.ms-excel" id="excel_upload_html" name="file"
+                                <input accept=".xls,.xlsx" id="excel_upload_html" name="file" required
                                        type="file"></input>
                             </div>
                         </div>
@@ -151,7 +155,7 @@
         var mmyyyy = month + '-' + year;
         $("#wageMonth").val(mmyyyy);
         $("#returnMonth").val(mmyyyy);
-        $("#salaryDisbursementDate").val(mmyyyy);
+        $("#salaryDisbursementDate").val(day + '-' + mmyyyy);
         $("#uploadedDateTime").val(day + '-' + mmyyyy + ' 00:00');
     });
 </script>

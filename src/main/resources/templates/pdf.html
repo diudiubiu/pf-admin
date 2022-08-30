@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="./table2pdf/css/index.css" />
-		<script src="jquery.min.js"></script>
-		<title>ECR_pdf</title>
-		<script type="text/javascript">
-			document.title = localStorage.getItem("pdfName");
-		</script>
-	</head>
-	<body>
-		<button id="previewAndDown" onclick="previewAndDown()" style="position: fixed; z-index: 100">SavePDF</button>
-		<div class="container">
-			<div class="w-[2339px] first-page h-[1653px] relative">
-				<!-- <div class="pb-[80px] h-[176px] relative">
-					<img
-						src="./assets/WechatIMG187.jpeg"
-						class="w-[130px] left-[227px] h-[123px] absolute top-[4px]"
-						alt=""
-					/>
-					<div class="w-full text-center" style="transform: translateX(-27px)">
-						<div class="text-[39px] leading-[38px] font-bold pb-[24px] tracking-tight">
-							EMPLOYEE'S PROVIDENT FUND
-						</div>
-						<div
-							class="text-[31px] leading-[30px] font-bold"
-							style="transform: translateX(1px); letter-spacing: 0.09px"
-						>
-							ELECTRONIC CHALLAN CUM RETURN (ECR)
-						</div>
-					</div>
-				</div> -->
-				<img src="./table2pdf/img/logo.jpg" alt="" />
-				<div class="employeeData pl-[54px]"></div>
-			</div>
-			<div class="content"></div>
-		</div>
-		<script src="./table2pdf/js/renderFooter.js"></script>
-		<script src="./table2pdf/js/renderRemarks.js"></script>
-		<script src="./table2pdf/js/renderEmployeeData.js"></script>
-		<script src="./table2pdf/js/renderMemberDetails.js"></script>
-		<script src="./table2pdf/js/main.js"></script>
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="./table2pdf/css/index.css" rel="stylesheet"/>
+    <script src="jquery.min.js"></script>
+    <title>ECR_pdf</title>
+    <script type="text/javascript">
+        document.title = localStorage.getItem("pdfName");
+    </script>
+</head>
+<body>
+<button id="previewAndDown" onclick="previewAndDown()" style="position: fixed; z-index: 100">SavePDF</button>
+<div class="container">
+    <div class="w-[2339px] first-page h-[1653px] relative">
+        <!-- <div class="pb-[80px] h-[176px] relative">
+            <img
+                src="./assets/WechatIMG187.jpeg"
+                class="w-[130px] left-[227px] h-[123px] absolute top-[4px]"
+                alt=""
+            />
+            <div class="w-full text-center" style="transform: translateX(-27px)">
+                <div class="text-[39px] leading-[38px] font-bold pb-[24px] tracking-tight">
+                    EMPLOYEE'S PROVIDENT FUND
+                </div>
+                <div
+                    class="text-[31px] leading-[30px] font-bold"
+                    style="transform: translateX(1px); letter-spacing: 0.09px"
+                >
+                    ELECTRONIC CHALLAN CUM RETURN (ECR)
+                </div>
+            </div>
+        </div> -->
+        <img alt="" src="./table2pdf/img/logo.jpg"/>
+        <div class="employeeData pl-[54px]"></div>
+    </div>
+    <div class="content"></div>
+</div>
+<script src="./table2pdf/js/renderFooter.js"></script>
+<script src="./table2pdf/js/renderRemarks.js"></script>
+<script src="./table2pdf/js/renderEmployeeData.js"></script>
+<script src="./table2pdf/js/renderMemberDetails.js"></script>
+<script src="./table2pdf/js/main.js"></script>
 
-	</body>
+</body>
 </html>
 <script type="text/javascript">
-	$(document).ready(function () {
-		$("#previewAndDown").click();
-	});
+    $(document).ready(function () {
+        $("#previewAndDown").click();
+    });
 </script>

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +59,7 @@ public class CustomProcessControl {
         //log.info("-----{},---{}--,{}",uploadFolder,realPath,realPath2);
         log.info("-----id:{}", request.getParameter("id"));
         List<MultipartFile> fileList = ((MultipartHttpServletRequest) request).getFiles("file");
-        log.info("-----fileList0:{}", fileList.get(0));
+        log.info("-----fileList0:{}", fileList);
 
         fileList.stream().filter(file -> !ObjectUtils.isEmpty(file)).forEach(file1 -> upload(file1, request.getParameter("id")));
         return "success";
@@ -83,7 +83,6 @@ public class CustomProcessControl {
 
     private void upload(MultipartFile file, String id) {
 
-
         String filename = file.getOriginalFilename();
         //String day =  DateUtil.today();
         //File pathFolder = FileUtil.mkdir(uploadFolder);
@@ -93,12 +92,17 @@ public class CustomProcessControl {
             long copySize = IoUtil.copy(file.getInputStream(), out, IoUtil.DEFAULT_BUFFER_SIZE);
             if (copySize > 0 && !StrUtil.isEmpty(id)) {
                 RecentEcr recentEcr = recentEcrRepository.getReferenceById(Long.parseLong(id));
-                recentEcr.setEcrStatementPath(filename);
+                if (filename.indexOf(".pdf") > -1) {
+                    recentEcr.setEcrStatementPath(filename);
+                }
+                if (filename.indexOf(".txt") > -1) {
+                    recentEcr.setEcrFilePath(filename);
+                }
                 recentEcr.setHasUploadFile(true);
                 recentEcrRepository.saveAndFlush(recentEcr);
             }
 
-            log.info("{}", copySize);
+            log.info("copySize:{}", copySize);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,7 +112,7 @@ public class CustomProcessControl {
     @ResponseBody
     public Page<RecentEcr> getRecentList() throws IOException {
 
-        Page<RecentEcr> recentEcrPage = recentEcrRepository.findAll((Specification<RecentEcr>) null, PageRequest.of(0, 10));
+        Page<RecentEcr> recentEcrPage = recentEcrRepository.findAll(PageRequest.of(0, 10, Sort.by("uploadDate").descending()));
 
         //JSONObject json = JSONUtil.parseObj(recentEcrPage);
         //log.info("----{}", json);

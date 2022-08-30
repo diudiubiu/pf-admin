@@ -2,6 +2,7 @@ package com.example.ecr.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +100,8 @@ public class ExcelOperationHelp {
         return inStr_m8;
     }
 
+
+
     public static String uanStris8(String strUan) {
         String str = strTrimExt(strUan);
         return str.length() > 8 ? stringInsertByInterval(str, "<br/>", 8) : str;
@@ -129,22 +132,34 @@ public class ExcelOperationHelp {
         return sb.toString();
     }
 
+    public static String trrn(){
+        //4372208008106
+        //4372208003389
+
+        return "43722"+RandomUtil.randomNumbers(8);
+    }
+    public static String crn(){
+        //229130822007915
+        //229130822007748
+        return "22913082200"+RandomUtil.randomNumbers(4);
+    }
 
     public static void main(String[] args) {
+        log.info("{}","4372208008106".length());
+        log.info("{}","229130822007748".length());
+        log.info("{}",System.currentTimeMillis());
+        //trrn();
         //DSNHP2111338000_69549346_1645421713009_2022022139913009442
         //DSNHP2111338000_         1661482871727_2022082611011100727
-        log.info("{}", assemblePdfName("69549346"));
+        //log.info("{}", assemblePdfName("69549346"));
         //int i = StrUtil.split("Rajdhani<br/>aaa", "<br/>").size();
-
         //Meena Anbazhagan
         // String str1 = ExcelOperationHelp.uanStrOpt("Roja Thanigachalam");
         //String str1 = ExcelOperationHelp.uanStrOpt("Sangeetha R\n");
-
         // String str1 = ExcelOperationHelp.uanStrOpt("M Sai Kumudha Priya");
         //String str3 = stringInsertByInterval("Sangeetha R", "<br/>", 8);
-
-        String inStr = "Dhanalakshmi Kamalakannan";
-        uanStrOpt(inStr);
+        //String inStr = "Dhanalakshmi Kamalakannan";
+        //uanStrOpt(inStr);
     }
 
     public static String stringInsertByInterval(String original, String insertString, int interval) {

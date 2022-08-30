@@ -27,4 +27,9 @@ public class RecentEcr {
     private String ecrStatementPath;
 
     private boolean hasUploadFile;
- }
+
+    @OneToOne
+    @JoinColumn(name="recentChallansId",referencedColumnName = "id")
+    private RecentChallans recentChallans;
+
+}

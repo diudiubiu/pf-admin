@@ -17,11 +17,11 @@
     <hr/>
     <div class="row">
         <div class="col-md-10">
-            <button id="translate" class="btn btn-default">Translate To HTML</button>
+            <button class="btn btn-default" id="translate">Translate To HTML</button>
             <br/>
-            <textarea id="json-input" th:text="${htmlData}" hidden></textarea><br/>
+            <textarea hidden id="json-input" th:text="${htmlData}"></textarea><br/>
 
-            <div id="jsoneditor" class="container-fluid"></div>
+            <div class="container-fluid" id="jsoneditor"></div>
             <script>
                 // create the editor
                 const container = document.getElementById("jsoneditor")
@@ -43,13 +43,13 @@
         </div>
     </div>
     <p class="lead">&nbsp;
-        <input hidden id="pdfName" th:value = "${pdfName}" />
+        <input hidden id="pdfName" th:value="${pdfName}"/>
     </p>
 </div>
 </body>
 </html>
 <script type="text/javascript">
-$(document).ready(function () {
-    $("#translate").click();
-});
+    $(document).ready(function () {
+        $("#translate").click();
+    });
 </script>

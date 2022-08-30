@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="jq-paginator.min.js"></script>
+    <title>pf_index</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>
+            ECR <small> Est. Id:<span th:text="${session.userName}"></span></small>
+        </h3>
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
+            <li class="active" role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
+        </ul><ul class="nav nav-pills"><li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+            <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
+            <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
+            <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
+            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">ECR Home Page</a></li>
+                <li><a href="#">ECR Upload</a></li>
+                <li class="active">ECR Challan List</li>
+            </ol>
+            <div class="panel panel-info">
+                <div class="panel-heading">Recent Challans:</div>
+                <div class="panel-body">
+                    <table class="table table-condensed table-hover table-bordered" id="recentChallanesForEpfo">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>TRRN</th>
+                            <th>Wage Month</th>
+                            <th>ECR Type</th>
+                            <th>Upload Date</th>
+                            <th>Status</th>
+                            <th>A/C 1</th>
+                            <th>A/C 2</th>
+                            <th>A/C 10</th>
+                            <th>A/C 21</th>
+                            <th>A/C 22</th>
+                            <th>Total Amt.</th>
+                            <th>CRN</th>
+                            <th>Challan Receipt</th>
+                            <th>Payment Receipt</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodyRecentChallanes"></tbody>
+                    </table>
+                    <ul class="pagination text-right" id="pageNavRecentChallanes"></ul>
+                </div>
+            </div>
+        </div>
+        <p class="lead">&nbsp;
+        </p>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.get("/getRecentList", function (data, status) {
+            console.log(data, status, "getRecentList");
+            var i = 1;
+            var tbody = $("#recentEcrForEpfo");
+            for (var data of data.content) {
+                var tr = tbody.append(`<tr>
+                    <td>${data.id}</td>
+                    <td>${data.trrn}</td>
+                    <td>${data.wageMonth}</td>
+                    <td>${data.ecrType}</td>
+                    <td>${data.uploadDate}</td>
+                    <td>${data.status}</td>
+                    <td>ac1</td>
+                    <td>ac2</td>
+                    <td>ac10</td>
+                    <td>ac21</td>
+                    <td>ac22</td>
+                    <td>ac1+ac2+ac10+ac21+ac22</td>
+                    <td>229130822007748</td>
+                    <td><input class="btn btn-success" type="button" onclick="downloadClick('${data.id}','${data.ecrStatementPath}')" value="challan"></input></td>
+                    <td><input class="btn btn-success" type="button" onclick="downloadClick('${data.id}','${data.ecrStatementPath}')" value="payment"></input></td>
+                </tr`);
+            }
+        }, 'json');
+        $('#pageNavRecentEcr').jqPaginator({
+            totalPages: 100,
+            visiblePages: 15,
+            currentPage: 1,
+            onPageChange: function (num, type) {
+                //$('#text').html('当前第' + num + '页');
+            }
+        });
+    });
+
+    function downloadClick(strId, fileName) {
+        location.href = '/download?fileName=' + fileName;
+        //window.open('/download?fileName=' + fileName);
+    }
+
+    function downloadClick(strId, fileName) {
+        //location.href = '/download?fileName='+fileName;
+        window.open('/download?fileName=' + fileName);
+    }
+</script>

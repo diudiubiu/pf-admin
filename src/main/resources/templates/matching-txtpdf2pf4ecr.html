@@ -8,22 +8,26 @@
     <title>pf_index</title>
 </head>
 <body>
-<div class="container">
-    <p class="lead">
-    <h3>ECR</h3></p>
-    <hr/>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>
+            ECR
+        </h3>
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
+            <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
+        </ul><ul class="nav nav-pills"><li class="active" role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+            <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
+            <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
+            <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
+            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
+        </ul>
+    </div>
     <div class="row">
-        <div class="col-md-2 sidebar-offcanvas">
-            <ul class="list-group">
-                <li class="list-group-item"><a href="/index">index</a></li>
-                <li class="list-group-item"><a href="/e2txt">excel2txt</a></li>
-                <li class="list-group-item"><a href="/e2pdf">excel2pdf</a></li>
-            </ul>
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <form action="/uploadPdfAndTxt" class="form-horizontal" enctype="multipart/form-data" method="post">
-
-                    <table id="recentEcr" class="table table-bordered table-hover">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="recentEcr">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -36,12 +40,11 @@
                             <th>download</th>
                         </tr>
                         </thead>
-
                         <tbody id="tbody"></tbody>
                     </table>
-             </form>
-
-            <ul id="pageNav" class="pagination text-right"></ul>
+                </div>
+            </form>
+            <ul class="pagination text-right" id="pageNav"></ul>
         </div>
         <p class="lead">&nbsp;
         </p>
@@ -50,8 +53,22 @@
 </body>
 </html>
 <script type="text/javascript">
+    let pageData;
     $(document).ready(function () {
+        getRecentList();
+        $('#pageNav').jqPaginator({
+            totalPages: 100,
+            visiblePages: 15,
+            currentPage: 1,
+            onPageChange: function (num, type) {
+                //$('#text').html('当前第' + num + '页');
+            }
+        });
+    });
+
+    function getRecentList() {
         $.get("/getRecentList", function (data, status) {
+            pageData = data;
             console.log(data, status, "getRecentList");
             var tbody = $("#tbody");
             for (var data of data.content) {
@@ -63,29 +80,18 @@
                     <td>${data.uploadDate}</td>
                     <td><a target="_blank" href="/upload/${data.ecrStatementPath}">pdf</a>
                     <a target="_blank" href="/upload/${data.ecrFilePath}">txt</a></td>
-                    <td>PDF:<input placeholder="pdf" id="upload_pdf" accept=".pdf" name="file" type="file"></input><br/>
-                        TXT:<input placeholder="txt" id="upload_txt" accept=".txt" name="file" type="file"></input></td>
+                    <td>PDF:<input placeholder="pdf" id="upload_pdf${data.id}" accept=".pdf" name="file" type="file" multiple></input><br/>
+                        TXT:<input placeholder="txt" id="upload_txt${data.id}" accept=".txt" name="file" type="file" multiple></input></td>
                     <td><input class="btn btn-primary" type="button" onclick="uploadClick(${data.id})" value="upload"></input></td>
                     <td><input class="btn btn-success" type="button" onclick="downloadClick('123','${data.ecrStatementPath}')" value="download"></input></td>
                 </tr`);
             }
         }, 'json');
-
-        $('#pageNav').jqPaginator({
-            totalPages: 100,
-            visiblePages: 15,
-            currentPage: 1,
-            onPageChange: function (num, type) {
-                //$('#text').html('当前第' + num + '页');
-            }
-        });
-
-
-    });
+    }
 
     function uploadClick(id) {
-        var upload_pdf = $("#upload_pdf")[0].files[0];
-        var upload_txt = $("#upload_txt")[0].files[0];
+        var upload_pdf = $("#upload_pdf" + id)[0].files[0];
+        var upload_txt = $("#upload_txt" + id)[0].files[0];
         if (upload_pdf != '') {
             // 构建数据
             var fileData = new FormData();
@@ -94,24 +100,29 @@
             if (upload_txt != '') {
                 fileData.append('file', upload_txt); // file 对象
             }
-            $.ajax('/uploadPdfAndTxt', {
-                method: 'POST',
-                data: fileData,
-                processData: false, // 默认 | 不处理数据
-                contentType: false, // 默认 | 不设置内容类型
-                success: function (res) {
-                    console.log(res);
-                    if (res == 'success') {
-                        //$("#id").addClass("btn-success");
-                        alert('upload success!!!');
+            if (fileData != '') {
+                $.ajax('/uploadPdfAndTxt', {
+                    method: 'POST',
+                    data: fileData,
+                    processData: false, // 默认 | 不处理数据
+                    contentType: false, // 默认 | 不设置内容类型
+                    success: function (res) {
+                        console.log(res);
+                        if (res == 'success') {
+                            //$("#id").addClass("btn-success");
+                            alert('upload success!!!');
+                            //getRecentList();
+                            location.href = '/txtpdf2pf4ecr';
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
-    function downloadClick(str,fileName) {
+
+    function downloadClick(str, fileName) {
         //location.href = '/download?fileName='+fileName;
-        window.open('/download?fileName='+fileName);
+        window.open('/download?fileName=' + fileName);
         // $.ajax('/download', {
         //     method: 'POST',
         //     data: {fileName: fileName},
@@ -124,5 +135,4 @@
         //     }
         // })
     }
-
 </script>
