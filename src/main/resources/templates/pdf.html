@@ -6,10 +6,20 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <link href="./table2pdf/css/index.css" rel="stylesheet"/>
     <script src="jquery.min.js"></script>
-    <title>ECR_pdf</title>
+    <title></title>
     <script type="text/javascript">
         document.title = localStorage.getItem("pdfName");
+        $(document).ready(function () {
+            $("#previewAndDown").click();
+            window.addEventListener('afterprint', () => {
+                window.close();
+            });
+        });
+        function previewAndDown() {
+            window.print();
+        }
     </script>
+
 </head>
 <body>
 <button id="previewAndDown" onclick="previewAndDown()" style="position: fixed; z-index: 100">SavePDF</button>
@@ -46,8 +56,3 @@
 
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#previewAndDown").click();
-    });
-</script>

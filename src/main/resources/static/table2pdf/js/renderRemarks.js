@@ -162,7 +162,7 @@ function renderRemarks(independentPage, footer) {
 	if (independentPage) {
 		return `<img src='./table2pdf/img/footer2.jpg'/>`
 	} else {
-		return `<div class="w-[2339px] h-[1653px] relative pl-[53px]">
+		return `<div class="w-[2339px] h-[1653px] relative pl-[54px]">
       ${footer}
       <img src='./table2pdf/img/footer1.jpg' />
     </div>

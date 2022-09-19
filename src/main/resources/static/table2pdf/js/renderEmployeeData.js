@@ -7,30 +7,29 @@ function renderEMployee(
 	footerFunc
 ) {
 	const html = `<div class="flex flex-col">
-      <div class="flex
-       flex-col text-[28px]">
-        <div class="flex h-[57px]">
-          <div class="w-[524px] border border-black flex pl-[10px] items-center">
+      <div class="flex flex-col text-[28px]" style="font-weight:350">
+        <div class="flex h-[55.5px]">
+          <div class="w-[522px] border border-black flex pl-[10px] items-center">
             Name of Establishment
           </div>
           <div class="w-[1705px] border border-black border-l-0 flex pl-[10px] items-center">
-            SENYAR INDIA PRIVATE LIMITED
+            ${data.corporateName || ''}
           </div>
         </div>
-        <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+        <div class="flex h-[55px]">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Establishment Id
           </div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">
-            DSNHP2111338000
+            ${data.establishmentId || ''}
           </div>
           <div class="w-[483px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">LIN</div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">
-            1315060570
+            ${data.lin || ''}
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">Wage Month</div>
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">Wage Month</div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">
             ${data.wageMonth || ''}
           </div>
@@ -42,7 +41,7 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Contribution Rate (%)
           </div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">12</div>
@@ -52,7 +51,7 @@ function renderEMployee(
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">ECR</div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Salary Disbursement Date
           </div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">
@@ -66,7 +65,7 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Exemption Status
           </div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">
@@ -80,7 +79,7 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">Remarks</div>
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">Remarks</div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 flex items-center">
             ${data.remarks || ''}
           </div>
@@ -92,7 +91,7 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[55px]">
-          <div class="w-[524px] border pl-[12px] border-black border-t-0 border-b-0 flex items-center">
+          <div class="w-[522px] border pl-[12px] border-black border-t-0 border-b-0 flex items-center">
             Total Members
           </div>
           <div class="w-[611px] border pl-[10px] border-black border-l-0 border-t-0 border-b-0 flex items-center">${
@@ -101,20 +100,20 @@ function renderEMployee(
           <div class="w-[483px] border pl-[10px] border-black border-l-0 border-t-0 border-b-0 flex items-center">
            ${data.aadhaarNotSeededMember ? 'Aadhaar Not Seeded Member' : ''}
           </div>
-          <div class="w-[608px] border pl-[10px] border-black ml-[3px] border-t-0 border-b-0 border-r-0 flex items-center">
+          <div class="w-[605px] border-none-r pl-[10px] border-black flex items-center" style="margin-left:5px;">
           ${data.aadhaarNotSeededMember || ''}
           </div>
-          <div class="w-[4px] border border-black border-l-0" style="height:57.5px;margin-top:-2px">
+          <div class="w-[4px] h-[55px] border-none-l border-black">
 
           </div>
         </div>
         <div class="flex h-[56.5px]">
-          <div class="w-[2229px] border pl-[10px] font-bold border-black flex items-center">
+          <div class="w-[2227px] border pl-[10px] font-bold border-black flex items-center">
             Contribution and Remittance Details (In Rupees) :
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Total EPF Contribution Remitted
           </div>
           <div
@@ -132,7 +131,7 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Total EPF-EPS Contribution Remitted
           </div>
           <div
@@ -150,12 +149,12 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[56px]">
-          <div class="w-[2229px] border pl-[10px] font-bold border-black border-t-0 flex items-center">
+          <div class="w-[2227px] border pl-[10px] font-bold border-black border-t-0 flex items-center">
             PMRPY Upfront Benefit Details (In Rupees) :
           </div>
         </div>
         <div class="flex h-[56px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Total PMRPY Upfront EPF Amount
           </div>
           <div
@@ -173,18 +172,18 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             PMRPY benefit remarks
           </div>
           <div class="w-[1705px] border pl-[10px] border-black   border-l-0 border-t-0 flex items-center">NA</div>
         </div>
         <div class="flex h-[55.5px]">
-          <div class="w-[2229px] border pl-[10px] font-bold border-black border-t-0 flex items-center">
+          <div class="w-[2227px] border pl-[10px] font-bold border-black border-t-0 flex items-center">
             ABRY Upfront Benefit Details (In Rupees) :
           </div>
         </div>
         <div class="flex h-[108px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             Total ABRY benefit Amount
           </div>
           <div class="flex w-[1705px] flex-col">
@@ -219,7 +218,7 @@ function renderEMployee(
           </div>
         </div>
         <div class="flex h-[64px]">
-          <div class="w-[524px] border pl-[10px] border-black border-t-0 flex items-center">
+          <div class="w-[522px] border pl-[10px] border-black border-t-0 flex items-center">
             ABRY benefit remarks
           </div>
           <div

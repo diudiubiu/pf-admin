@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <link href="bootstrap.min.css" rel="stylesheet">
@@ -9,130 +9,202 @@
 </head>
 <body>
 <div class="container-fluid">
+    <h3>
+        ECR
+    </h3>
     <div class="page-header">
-        <h3>
-            ECR
-        </h3>
         <ul class="nav nav-pills">
             <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
             <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
-        </ul><ul class="nav nav-pills"><li class="active" role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+
+            <li class="active" role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
             <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
             <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
             <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
-            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
         </ul>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <form action="/uploadPdfAndTxt" class="form-horizontal" enctype="multipart/form-data" method="post">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="recentEcr">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>fileName</th>
-                            <th>status</th>
-                            <th>uploadDate</th>
-                            <th>lookup</th>
-                            <th>pdf/txt</th>
-                            <th>upload</th>
-                            <th>download</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody"></tbody>
-                    </table>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                     aria-valuemax="100" style="width: 0%;">
+                    0%
                 </div>
+            </div>
+            <form action="/uploadPdfAndTxt" class="form-horizontal" enctype="multipart/form-data" method="post">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Recent ECR's:</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-hover table-bordered" id="recentEcr">
+                                <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>EstablishmentId</th>
+                                    <th>TRRN</th>
+                                    <th>fileName</th>
+                                    <th>UploadDate</th>
+                                    <th>edit</th>
+                                    <th>UploadStatus-lookup</th>
+                                    <th colspan="2">ecrPdf/ecrTxt-upload</th>
+                                    <th colspan="3">download/Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody th:if="${data != null}">
+                                <tr th:each="data:${data.getContent()}">
+                                    <td>
+                                        <strong><span th:text="${data.id}"></span></strong>
+                                    </td>
+                                    <td>
+                                        <code th:text="${data.establishmentId}"></code>
+                                    </td>
+                                    <td>
+                                        <mark th:text="${data.trrn}"></mark>
+                                    </td>
+                                    <td th:text="${#strings.replace(data.ecrStatementPath,'_',' ')}"></td>
+                                    <td th:text="${data.uploadDate}"></td>
+                                    <td>
+                                        <a class="btn btn-warning" th:onclick="editRecentEcr([[${data.id}]])">edit</a>
+                                    </td>
+                                    <td>
+                                        <span th:if="${false == data.uploadStatus}" class="label label-danger">NotUploaded</span>
+                                        <span th:if="${true == data.uploadStatus}" class="label label-success">Uploaded</span>
+
+                                        <a class="btn btn-info btn-xs" target="_blank"
+                                           th:href="@{'/upload/'+${data.ecrStatementPath}}">viewEcrPdf</a>&nbsp;
+                                        <a class="btn btn-info btn-xs" target="_blank"
+                                           th:href="@{'/upload/'+${data.ecrFilePath}}">viewEcrTxt</a></td>
+
+                                    <td>PDF:<input accept=".pdf" multiple name="file" class="btn btn-default btn-xs"
+                                                   th:id="'upload_pdf'+${data.id}" type="file"></input>
+                                        TXT:<input accept=".txt" multiple name="file" class="btn btn-default btn-xs"
+                                                   th:id="'upload_txt'+${data.id}" type="file"></input></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary active"
+                                                th:onclick="uploadClick([[${data.id}]])">upload
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success"
+                                                th:onclick="downloadClick([[${data.ecrFilePath}]])">ecrTxt
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success"
+                                                th:onclick="downloadClick([[${data.ecrStatementPath}]])">ecrPdf
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger"
+                                                th:onclick="del([[${data.id}]])">delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </form>
             <ul class="pagination text-right" id="pageNav"></ul>
         </div>
-        <p class="lead">&nbsp;
+        <p class="lead" th:if="${data != null}">
+            <input id="totalPages" th:value="${data.getTotalPages()}" type="hidden"></input>
+            <input id="p" th:value="${p}" type="hidden"></input>
+
         </p>
     </div>
 </div>
 </body>
 </html>
 <script type="text/javascript">
-    let pageData;
     $(document).ready(function () {
-        getRecentList();
+        var p = parseInt($("#p").val());
+        var t = parseInt($("#totalPages").val());
+        //console.log(p, t);
         $('#pageNav').jqPaginator({
-            totalPages: 100,
-            visiblePages: 15,
-            currentPage: 1,
+            totalPages: t,
+            visiblePages: 10,
+            currentPage: p,
             onPageChange: function (num, type) {
-                //$('#text').html('当前第' + num + '页');
+                if (type == 'change') {
+                    location.href = "/txtpdf2pf4ecr?p=" + num;
+                }
+                console.log(num, type)
+                //location.href = "/txtpdf2pf4ecr?p=1";
             }
         });
     });
 
-    function getRecentList() {
-        $.get("/getRecentList", function (data, status) {
-            pageData = data;
-            console.log(data, status, "getRecentList");
-            var tbody = $("#tbody");
-            for (var data of data.content) {
-                var ecrStatementPath = data.ecrStatementPath.replace("_", "<br/>");
-                var tr = tbody.append(`<tr>
-                    <td>${data.id}</td>
-                    <td>${ecrStatementPath}</td>
-                    <td>${data.hasUploadFile}</td>
-                    <td>${data.uploadDate}</td>
-                    <td><a target="_blank" href="/upload/${data.ecrStatementPath}">pdf</a>
-                    <a target="_blank" href="/upload/${data.ecrFilePath}">txt</a></td>
-                    <td>PDF:<input placeholder="pdf" id="upload_pdf${data.id}" accept=".pdf" name="file" type="file" multiple></input><br/>
-                        TXT:<input placeholder="txt" id="upload_txt${data.id}" accept=".txt" name="file" type="file" multiple></input></td>
-                    <td><input class="btn btn-primary" type="button" onclick="uploadClick(${data.id})" value="upload"></input></td>
-                    <td><input class="btn btn-success" type="button" onclick="downloadClick('123','${data.ecrStatementPath}')" value="download"></input></td>
-                </tr`);
-            }
-        }, 'json');
-    }
-
     function uploadClick(id) {
         var upload_pdf = $("#upload_pdf" + id)[0].files[0];
         var upload_txt = $("#upload_txt" + id)[0].files[0];
-        if (upload_pdf != '') {
+        if (typeof (upload_pdf) != 'undefined') {
             // 构建数据
             var fileData = new FormData();
             fileData.append('id', id);
             fileData.append('file', upload_pdf); // file 对象
-            if (upload_txt != '') {
+            if (typeof (upload_txt) != 'undefined') {
                 fileData.append('file', upload_txt); // file 对象
             }
-            if (fileData != '') {
-                $.ajax('/uploadPdfAndTxt', {
-                    method: 'POST',
-                    data: fileData,
-                    processData: false, // 默认 | 不处理数据
-                    contentType: false, // 默认 | 不设置内容类型
-                    success: function (res) {
-                        console.log(res);
-                        if (res == 'success') {
-                            //$("#id").addClass("btn-success");
-                            alert('upload success!!!');
-                            //getRecentList();
-                            location.href = '/txtpdf2pf4ecr';
-                        }
-                    }
-                })
-            }
+            uploadPdfAndTxt(fileData);
         }
     }
 
-    function downloadClick(str, fileName) {
-        //location.href = '/download?fileName='+fileName;
-        window.open('/download?fileName=' + fileName);
-        // $.ajax('/download', {
-        //     method: 'POST',
-        //     data: {fileName: fileName},
-        //     success: function (res) {
-        //         console.log(res);
-        //         if (res == 'success') {
-        //             //$("#id").addClass("btn-success");
-        //             alert('download success!!!');
-        //         }
-        //     }
-        // })
+    function uploadPdfAndTxt(fileData) {
+        $.ajax('/uploadPdfAndTxt', {
+            method: 'POST',
+            data: fileData,
+            processData: false, // 默认 | 不处理数据
+            contentType: false, // 默认 | 不设置内容类型
+            success: function (res) {
+                console.log(res);
+                if (res == 'success') {
+                    //$("#id").addClass("btn-success");
+                    //alert('upload success!!!');
+                    //getRecentList();
+                    location.href = '/txtpdf2pf4ecr';
+                }
+            }, xhrFields: {
+                onprogress: function (progress) {
+                    console.log("progress", progress);
+                    if (progress.lengthComputable) {
+                        var percentage = Math.floor(progress.loaded / progress.total * 100);
+                        console.log(percentage)
+                        $(".progress-bar").css("width", percentage + "%");
+                        $(".progress-bar").attr("aria-valuenow", percentage).text(percentage + "%");
+                    }
+                }
+            }
+        });
     }
+
+    function downloadClick(fileName) {
+        if (fileName != null)
+            //alert(fileName);
+            location.href = '/download?fileName=' + fileName;
+    }
+
+    function del(id) {
+        if (confirm("confirm delete?")) {
+            location.href = '/del?id=' + id;
+        }
+    }
+
+    //canNumber
+    function editRecentEcr(id) {
+        var p = parseInt($("#p").val());
+        //console.log(id);
+        var url = "/e2ecr4pdf6edit?p=" + p + "&id=" + id;
+        if (id != '')
+            var modalDialog = window.open(url, "", "height=460, width=800,top=50,left=150");
+
+        console.log("ModalDialog", modalDialog)
+
+        modalDialog.onbeforeunload = function () {
+            console.log('closed');
+            location.href = "/txtpdf2pf4ecr?p=" + p;
+        }
+        //location.href = "/e2challans4pdf?p=" + p + "&id=" + id;
+    }
+
 </script>

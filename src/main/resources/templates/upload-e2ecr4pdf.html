@@ -2,9 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <link href="bootstrap.min.css" rel="stylesheet">
     <script src="jquery.min.js"></script>
     <script src="My97DatePicker/WdatePicker.js"></script>
@@ -12,18 +9,18 @@
 </head>
 <body>
 <div class="container-fluid">
+    <h3>
+        ECR
+    </h3>
     <div class="page-header">
-        <h3>
-            ECR
-        </h3>
         <ul class="nav nav-pills">
             <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
             <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
-        </ul><ul class="nav nav-pills"><li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+
+            <li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
             <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
             <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
             <li class="active" role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
-            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
         </ul>
     </div>
     <div class="row">
@@ -36,13 +33,15 @@
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Wage Month</label>
-                                <input class="form-control input-sm" id="wageMonth" name="wageMonth" onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
+                                <input class="form-control input-sm" id="wageMonth" name="wageMonth"
+                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
                                        required
                                        type="text"></input>
                             </div>
                             <div class="col-sm-6">
                                 <label>Return Month</label>
-                                <input class="form-control input-sm" id="returnMonth" name="returnMonth" onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
+                                <input class="form-control input-sm" id="returnMonth" name="returnMonth"
+                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
                                        required
                                        type="text"></input>
                             </div>
@@ -71,7 +70,7 @@
                                        type="text"></input>
                             </div>
                             <div class="col-sm-3">
-                                <label>TRRN Number</label>
+                                <label><span class="label label-warning">Warning</span> TRRN Number</label>
                                 <input class="form-control input-sm" name="trrnNumber" type="text"></input>
                             </div>
                             <div class="col-sm-3">
@@ -83,19 +82,26 @@
                                 <label>ECR Id</label>
                                 <input class="form-control input-sm" max="99999999" min="0" name="ecrId" required
                                        step="1" type="number"
-                                       value="12345678"></input>
+                                       value="87231657"></input>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label>Aadhaar Not Seeded Member</label>
-                                <input class="form-control input-sm" max="99999999" min="0" name="aadhaarNotSeededMember"
+                                <input class="form-control input-sm" max="99999999" min="0"
+                                       name="aadhaarNotSeededMember"
                                        step="1" type="number"></input>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label>Total Refund Advance</label>
                                 <input class="form-control input-sm" name="totalRefundAdvance" type="text"></input>
+                            </div>
+                            <div class="col-sm-4"><span class="label label-default">Establishment Id</span>
+                                <select class="form-control" name="establishmentId">
+                                    <option>MRNOI2513599000</option>
+                                    <option>DSNHP2111338000</option>
+                                </select>
                             </div>
                         </div>
 
@@ -152,11 +158,12 @@
                 month = monthArr[i];
             }
         }
+        var cday = day < 10 ? "0" : "";
         var mmyyyy = month + '-' + year;
         $("#wageMonth").val(mmyyyy);
         $("#returnMonth").val(mmyyyy);
-        $("#salaryDisbursementDate").val(day + '-' + mmyyyy);
-        $("#uploadedDateTime").val(day + '-' + mmyyyy + ' 00:00');
+        $("#salaryDisbursementDate").val(cday + day + '-' + mmyyyy);
+        $("#uploadedDateTime").val(cday + day + '-' + mmyyyy + ' 00:00');
     });
 </script>
 

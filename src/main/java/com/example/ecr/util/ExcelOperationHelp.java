@@ -1,6 +1,7 @@
 package com.example.ecr.util;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.CreditCodeUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -9,10 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.thymeleaf.util.StringUtils;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +39,13 @@ public class ExcelOperationHelp {
         }
         return str;
     }
-
+    public static String isNumberForRound2(String str) {
+        boolean strResult = NumberUtil.isNumber(str);
+        if (strResult) {
+            return NumberUtil.toStr(NumberUtil.round(str, 2));
+        }
+        return str;
+    }
     /**
      * 字符串去除空格
      *
@@ -101,26 +110,43 @@ public class ExcelOperationHelp {
     }
 
 
-
     public static String uanStris8(String strUan) {
         String str = strTrimExt(strUan);
         return str.length() > 8 ? stringInsertByInterval(str, "<br/>", 8) : str;
     }
 
-    public static String assemblePdfName(String ecrId) {
+    public static String assembleTxtName(String userNameForTxtFileName) {
+        LocalDate localDate = LocalDate.now();
+
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+
+        String weekStr = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+
+
+        String formatDate = DateUtil.format(DateUtil.date(Calendar.getInstance()), "yyyyMMddHHmmssSSSSS");
+        if (StrUtil.isEmpty(userNameForTxtFileName)) {
+            userNameForTxtFileName = "Other";
+        }
+        String txtFileName = userNameForTxtFileName + " " + weekStr + "_" + formatDate + ".txt";
+        log.info("{}", txtFileName);
+        return txtFileName;
+
+    }
+
+    public static String assemblePdfName(String name,String ecrId) {
         long sct = System.currentTimeMillis();
         Date date2 = DateUtil.date(Calendar.getInstance());
         String formatDate = DateUtil.format(date2, "yyyyMMddHHmmssSSSSS");
         //69549346_1645421713009
 
         StringBuffer sb = new StringBuffer();
-        sb.append("DSNHP2111338000_");
-        if(StrUtil.isEmpty(ecrId)){
-            int[] iArr =  NumberUtil.generateRandomNumber(0, 9, 8);
+        sb.append(name+"_");
+        if (StrUtil.isEmpty(ecrId)) {
+            int[] iArr = NumberUtil.generateRandomNumber(0, 9, 8);
             for (int i = 0; i < iArr.length; i++) {
                 sb.append(iArr[i]);
             }
-        }else{
+        } else {
             sb.append(ecrId);
         }
         sb.append("_");
@@ -132,22 +158,41 @@ public class ExcelOperationHelp {
         return sb.toString();
     }
 
-    public static String trrn(){
+    public static String trrn() {
         //4372208008106
         //4372208003389
 
-        return "43722"+RandomUtil.randomNumbers(8);
-    }
-    public static String crn(){
-        //229130822007915
-        //229130822007748
-        return "22913082200"+RandomUtil.randomNumbers(4);
+        return "43722" + RandomUtil.randomNumbers(8);
     }
 
-    public static void main(String[] args) {
-        log.info("{}","4372208008106".length());
-        log.info("{}","229130822007748".length());
-        log.info("{}",System.currentTimeMillis());
+    public static String CanNumber() {
+        // StrUtil.subWithLength(trrn,5,7);
+        return "229" + RandomUtil.randomNumbers(12);
+    }
+
+    public static String crn() {
+        //229130822007915
+        //229130822007748
+        return "22913082200" + RandomUtil.randomNumbers(4);
+    }
+
+
+
+
+
+    public static void main(String[] args) throws ParseException {
+
+        //log.info("{}", "4372208008106".length());
+        //log.info("{}", "229130822007748".length());
+        //log.info("{}", System.currentTimeMillis());
+        String s = CreditCodeUtil.randomCreditCode();
+        //log.info("{}", s);
+        //log.info("{}", RandomUtil.randomNumbers(15));
+        SimpleDateFormat sdf = new SimpleDateFormat("EE dd MMM yyyy", Locale.UK);      // 月日年
+
+        log.info("{}", sdf.format(new Date()));
+
+
         //trrn();
         //DSNHP2111338000_69549346_1645421713009_2022022139913009442
         //DSNHP2111338000_         1661482871727_2022082611011100727
@@ -216,7 +261,7 @@ public class ExcelOperationHelp {
         } else {
             double hundreds = value % 1000;
             int other = (int) (value / 1000);
-            return format(",###", other) + ',' + format("000", hundreds);
+            return format(",##", other) + ',' + format("000", hundreds);
         }
     }
 

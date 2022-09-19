@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <link href="bootstrap.min.css" rel="stylesheet">
@@ -9,18 +9,18 @@
 </head>
 <body>
 <div class="container-fluid">
+    <h3>
+        ECR <small> admin:<span th:text="${session.userName}"></span>&nbsp;&nbsp;<span th:text="${session.epfoNow}"></span></small>
+    </h3>
     <div class="page-header">
-        <h3>
-            ECR <small> Est. Id:<span th:text="${session.userName}"></span></small>
-        </h3>
         <ul class="nav nav-pills">
             <li class="active" role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
             <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
-        </ul><ul class="nav nav-pills"><li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+
+            <li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
             <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
             <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
             <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
-            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
         </ul>
     </div>
     <div class="row">
@@ -31,13 +31,12 @@
                 <li><a href="#">Actionable ECR Challans</a></li>
                 <li class="active">ECR Upload</li>
             </ol>
-            <div class="panel panel-info">
+            <div class="panel panel-info" style="display: none">
                 <div class="panel-heading">Draft ECR's:</div>
-                <div class="panel-body">
+                <div class="panel-body" >
                     <table class="table table-condensed table-hover table-bordered" id="draftEcrForEpfo">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>S No.</th>
                             <th>Wage Month</th>
                             <th>ECR Type</th>
@@ -54,7 +53,6 @@
                         </thead>
                         <tbody id="tbodyDraftEcr"></tbody>
                     </table>
-                    <ul class="pagination text-right" id="pageNavDraftEcr"></ul>
                 </div>
             </div>
 
@@ -64,7 +62,6 @@
                     <table class="table table-condensed table-hover table-bordered" id="recentEcrForEpfo">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>S No.</th>
                             <th>TRRN</th>
                             <th>Wage Month</th>
@@ -77,13 +74,28 @@
                             <th>ECR Statement</th>
                         </tr>
                         </thead>
-                        <tbody id="tbodyRecentEcr"></tbody>
+                        <tbody th:if="${data != null}">
+                        <tr th:each="data,dataStat:${data.getContent()}">
+                            <td th:text="${dataStat.index+1}"></td>
+                            <td th:text="${data.trrn}"></td>
+                            <td th:text="${data.wageMonth}"></td>
+                            <td th:text="${data.ecrType}"></td>
+                            <td th:text="${data.salaryDisbDate}"></td>
+                            <td th:text="${data.contrRate}"></td>
+                            <td th:text="${data.uploadDate}"></td>
+                            <td th:text="${data.status}"></td>
+                            <td><button type="button" class="btn btn-link" th:onclick="downloadClick([[${data.ecrFilePath}]])">ecrTxt</button></td>
+                            <td><button type="button" class="btn btn-link" th:onclick="downloadClick([[${data.ecrStatementPath}]])">ecrPdf</button></td>
+                        </tr>
+                        </tbody>
                     </table>
-                    <ul class="pagination text-right" id="pageNavRecentEcr"></ul>
+                    <ul class="pagination text-right" id="pageNav"></ul>
                 </div>
             </div>
         </div>
-        <p class="lead">&nbsp;
+        <p class="lead" th:if="${data != null}">
+            <input id="totalPages" th:value="${data.getTotalPages()}" type="hidden"></input>
+            <input id="p" th:value="${p}" type="hidden"></input>
         </p>
     </div>
 </div>
@@ -91,46 +103,25 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
-        $.get("/getRecentList", function (data, status) {
-            console.log(data, status, "getRecentList");
-            var i = 1;
-            var tbody = $("#recentEcrForEpfo");
-            for (var data of data.content) {
-                var tr = tbody.append(`<tr>
-                    <td>${data.id}</td>
-                    <td>${i++}</td>
-                    <td>${data.trrn}</td>
-                    <td>${data.wageMonth}</td>
-                    <td>${data.ecrType}</td>
-                    <td>${data.salaryDisbDate}</td>
-                    <td>${data.contrRate}</td>
-                    <td>${data.uploadDate}</td>
-                    <td>${data.status}</td>
-                    <td>txt</td>
-                    <td><input class="btn btn-success" type="button" onclick="downloadClick('${data.id}','${data.ecrStatementPath}')" value="pdf"></input></td>
-                </tr`);
-            }
-        }, 'json');
-        $('#pageNavRecentEcr').jqPaginator({
-            totalPages: 100,
-            visiblePages: 15,
-            currentPage: 1,
+        var p = parseInt($("#p").val());
+        var t = parseInt($("#totalPages").val());
+        console.log(p, t);
+        $('#pageNav').jqPaginator({
+            totalPages: t,
+            visiblePages: 10,
+            currentPage: p,
             onPageChange: function (num, type) {
-                //$('#text').html('当前第' + num + '页');
-            }
-        });
-        $('#pageNavDraftEcr').jqPaginator({
-            totalPages: 100,
-            visiblePages: 15,
-            currentPage: 1,
-            onPageChange: function (num, type) {
-                //$('#text').html('当前第' + num + '页');
+                if (type == 'change') {
+                    location.href = "/ecr6ReturnFiling?p=" + num;
+                }
+                console.log(num, type)
+                //location.href = "/txtpdf2pf4ecr?p=1";
             }
         });
     });
 
-    function downloadClick(strId, fileName) {
-        location.href = '/download?fileName=' + fileName;
-        //window.open('/download?fileName=' + fileName);
+    function downloadClick(fileName) {
+        if (fileName != null)
+            location.href = '/download?fileName=' + fileName;
     }
 </script>

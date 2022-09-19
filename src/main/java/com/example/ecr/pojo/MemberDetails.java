@@ -2,13 +2,21 @@ package com.example.ecr.pojo;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Member Details : 成员信息详情
  *
  * @author Hs
  */
 @Data
+
 public class MemberDetails {
+
+
     private int SiNo;
     /**
      * 公司

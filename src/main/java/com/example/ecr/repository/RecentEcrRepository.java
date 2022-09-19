@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RecentEcrRepository extends JpaRepository<RecentEcr, Long> {
 
-    Page<RecentEcr> findAll(Pageable pageable);
+    Page<RecentEcr> findAllByEstablishmentId(Pageable pageable,String establishmentId);
 
 }

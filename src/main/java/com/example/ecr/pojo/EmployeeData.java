@@ -4,11 +4,24 @@ import cn.hutool.core.util.StrUtil;
 import com.example.ecr.util.ExcelOperationHelp;
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * @author
  */
 @Data
+
 public class EmployeeData {
+
+
+    private String establishmentId;
+    private String pdfName;
+    private String lin;
+    private String corporateName;
+
 
     private String wageMonth;
     private String returnMonth;
@@ -46,9 +59,9 @@ public class EmployeeData {
     }
 
     public void setEmployerEPFShare(String employerEPFShare) {
-        if(StrUtil.isEmpty(employerEPFShare)){
+        if (StrUtil.isEmpty(employerEPFShare)) {
             this.employerEPFShare = employerEPFShare;
-        }else{
+        } else {
             this.employerEPFShare = ExcelOperationHelp.lakhFormattedComma(Double.valueOf(employerEPFShare));
         }
     }

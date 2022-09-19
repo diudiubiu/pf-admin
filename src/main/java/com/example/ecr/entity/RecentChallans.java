@@ -12,8 +12,7 @@ public class RecentChallans {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name="recentEcrId",referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
     private RecentEcr recentEcr;
 
     private String AC1;
@@ -23,9 +22,11 @@ public class RecentChallans {
     private String AC22;
     private String totalAmt;
     private String CRN;
+    private boolean uploadStatus;
 
     private String challanReceiptPath;
     private String paymentReceiptPath;
 
+    //private boolean hasUploadFile;
 
 }

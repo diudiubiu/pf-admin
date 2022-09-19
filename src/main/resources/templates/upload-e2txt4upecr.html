@@ -2,27 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <link href="bootstrap.min.css" rel="stylesheet">
     <script src="My97DatePicker/WdatePicker.js"></script>
     <title>ECR_txt</title>
 </head>
 <body>
 <div class="container-fluid">
+    <h3>
+        ECR
+    </h3>
     <div class="page-header">
-        <h3>
-            ECR
-        </h3>
         <ul class="nav nav-pills">
             <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
             <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
-        </ul><ul class="nav nav-pills"><li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
+
+            <li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
             <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
             <li class="active" role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
             <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
-            <li role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
         </ul>
     </div>
     <div class="row">
@@ -31,6 +28,13 @@
                 <div class="panel-heading"><h4>Excel to txt.</h4></div>
                 <div class="panel-body">
                     <form action="/excel2txt" class="form-horizontal" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label for="txtName">txtFileNameForUser</label>
+                                <input class="form-control input-sm" id="txtName" name="txtName" type="text"
+                                       value="YUTO"></input>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label for="excel_upload_txt">Choose excel to upload</label>

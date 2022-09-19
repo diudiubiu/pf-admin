@@ -1,57 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <link href="bootstrap.min.css" rel="stylesheet">
     <script src="My97DatePicker/WdatePicker.js"></script>
-    <title>ECR_txt</title>
+    <script src="jquery.min.js"></script>
+    <title>edit challans</title>
 </head>
 <body>
+<div class="page-header">
+</div>
 <div class="container-fluid">
-    <div class="page-header">
-        <h3>
-            ECR
-        </h3>
-        <ul class="nav nav-pills">
-            <li role="presentation"><a href="/ecr6ReturnFiling">ECR/RETURN FILING</a></li>
-            <li role="presentation"><a href="/ecr6Payment">PAYMENT（ECR）</a></li>
-        </ul>
-        <ul class="nav nav-pills">
-            <li role="presentation"><a href="/txtpdf2pf4ecr">matching-txtpdf2pf4ecr</a></li>
-            <li role="presentation"><a href="/pdfpdf2pf4challans">matching-pdfpdf2pf4challans</a></li>
-            <li role="presentation"><a href="/e2txt">upload-e2txt4upecr</a></li>
-            <li role="presentation"><a href="/e2ecr4pdf">upload-e2ecr4pdf</a></li>
-            <li class="active" role="presentation"><a href="/e2challans4pdf">upload-e2challans4pdf</a></li>
-        </ul>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-info">
-                <div class="panel-heading"><h4>Excel to pdf.</h4></div>
+                <div class="panel-heading"><h4>edit challans.</h4></div>
                 <div class="panel-body">
                     <form action="/excel2json4Challans" class="form-horizontal" enctype="multipart/form-data"
+                          id="excel2json4Challans"
                           method="post">
 
                         <div class="col-sm-4 alert alert-danger">
                             <label>#id</label>
-                            <input class="form-control input-sm" name="id" type="number" max="9999999999" min="1" required></input>
+                            <input th:value="${id}" id="id" class="form-control input-sm" max="9999999999" min="1"
+                                   name="id" required
+                                   type="number"></input>
+                            <input th:value="${p}" name="p" required type="hidden"></input>
                         </div>
 
                         <div class="col-sm-4">
-                            <label>CAN Number</label>
-                            <input class="form-control input-sm" name="canNumber" type="text"></input>
+                            <label><span class="label label-warning">Warning</span> CAN Number</label>
+                            <input class="form-control input-sm" id="canNumber" name="canNumber" type="text" th:value="${recentChallans.getCRN()}"></input>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <label for="excel_upload_txt">Choose excel to upload</label>
-                                <input accept=".xls,.xlsx" id="excel_upload_txt" name="file" required
+                                <label for="excel_upload_xls">Choose excel to upload</label>
+                                <input accept=".xls,.xlsx" id="excel_upload_xls" name="file"
                                        type="file"></input></div>
                         </div>
-                        <input class="btn btn-default" type="submit" value="Submit"></input>
+                        <input class="btn btn-default" type="button" id="submitBut" value="Submit"></input>
                     </form>
                 </div>
             </div>
@@ -62,4 +50,31 @@
 </div>
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitBut").click(function(){
+            var excel_upload_xls = $("#excel_upload_xls")[0].files[0];
+            var canNumber = $("#canNumber").val();
+            var id = $("#id").val();
 
+            var fileData = new FormData();
+            fileData.append('file', excel_upload_xls);
+            fileData.append('canNumber', canNumber);
+            fileData.append('id', id);
+
+            $.ajax('/excel2json4Challans', {
+                method: 'POST',
+                data: fileData,
+                processData: false, // 默认 | 不处理数据
+                contentType: false, // 默认 | 不设置内容类型
+                success: function (res) {
+                    console.log(res);
+                    if (res == 'success') {
+                        window.close();
+                    }
+                }
+            })
+        });
+
+    });
+</script>

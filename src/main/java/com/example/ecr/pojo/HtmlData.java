@@ -2,7 +2,10 @@ package com.example.ecr.pojo;
 
 import lombok.Data;
 
-import java.util.HashMap;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +15,15 @@ import java.util.Map;
  * @author
  */
 @Data
+
+
 public class HtmlData {
+
+    /**
+     * 1:{id,name}
+     * 2:{id,name}
+     */
+    Map<Integer, List<MemberDetails>> pageDate;
     /**
      * 对象列表总个数
      * 也是人数
@@ -33,13 +44,10 @@ public class HtmlData {
     private String totalEPSContributionRemitted;
     //I总
     private String totalEPFEPSContributionRemitted;
-    /**前端提交所得*/
-    private EmployeeData employeeData;
     /**
-     * 1:{id,name}
-     * 2:{id,name}
+     * 前端提交所得
      */
-    Map<Integer, List<MemberDetails>> pageDate;
+    private EmployeeData employeeData;
     /**后台计算所得*/
 
 }

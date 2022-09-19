@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <title>login</title>
 </head>
 <body>
 <div class="container">
-    <form>
-        <div action="/login" class="form-group">
+    <form action="/admin-login" class="form-signin" method="post">
+        <h2 class="form-signin-heading">pf admin sign in</h2>
+        <div class="form-group">
             <label for="exampleInputUser">user</label>
             <input class="form-control" id="exampleInputUser" name="user" placeholder="user" type="text">
         </div>

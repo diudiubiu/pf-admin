@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="My97DatePicker/WdatePicker.js"></script>
+    <title>edit ecr</title>
+</head>
+<body>
+<div class="page-header">
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h4>edit ecr.</h4></div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="saveOrUpdateRecentEcr">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label class="label label-default">Establishment Id</label>
+                                <select class="form-control" id="establishmentId" name="establishmentId">
+                                    <option th:selected="${'MRNOI2513599000' eq establishmentId}">MRNOI2513599000
+                                    </option>
+                                    <option th:selected="${'DSNHP2111338000' eq establishmentId}">DSNHP2111338000
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Wage Month</label>
+                                <input class="form-control input-sm" id="wageMonth" name="wageMonth"
+                                       onClick="WdatePicker({dateFmt:'MMM-yyyy'})"
+                                       required th:value="${recentEcr.getWageMonth()}"
+                                       type="text"></input>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Salary Disbursement Date</label>
+                                <input class="form-control input-sm" id="salaryDisbursementDate"
+                                       name="salaryDisbDate" onClick="WdatePicker({dateFmt:'dd-MMM-yyyy'})"
+                                       required th:value="${recentEcr.getSalaryDisbDate()}"
+                                       type="text"></input>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Uploaded Date Time</label>
+                                <input class="form-control input-sm" id="uploadedDateTime" name="uploadDate"
+                                       onClick="WdatePicker({dateFmt:'dd-MMM-yyyy HH:mm'})"
+                                       required th:value="${recentEcr.getUploadDate()}"
+                                       type="text"></input>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label><span class="label label-warning">Warning</span> TRRN Number</label>
+                                <input class="form-control input-sm" name="trrn" type="text"
+                                       th:value="${recentEcr.getTrrn()}"></input>
+                            </div>
+                        </div>
+                        <input name="id" type="hidden" th:value="${recentEcr.getId()}"></input>
+                        <input class="btn btn-default" type="button" id="submit" value="Submit"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="lead">&nbsp;
+        </p>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submit").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "/saveOrUpdateRecentEcr",
+                data: $('#saveOrUpdateRecentEcr').serialize(),
+                success: function (res) {
+                    if(res == 'success'){
+                        window.close();
+                    }
+                }
+            });
+        });
+    });
+</script>
+
